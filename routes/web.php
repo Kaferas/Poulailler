@@ -2,6 +2,7 @@
 
 use Facade\FlareClient\View;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\AcceuilController;
 
 /*
@@ -15,7 +16,9 @@ use App\Http\Controllers\AcceuilController;
 |
 */
 
-Route::get('/', [AcceuilController::class, "index"]);
+Route::get('/', [AcceuilController::class, "index"])->name("acceuil");
+
+Route::get("stocks", [StockController::class, 'index'])->name("stocks");
 
 Route::get('/dashboard', function () {
     return view('dashboard');

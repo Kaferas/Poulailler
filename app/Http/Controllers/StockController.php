@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AcceuilController extends Controller
+class StockController extends Controller
 {
     public function index()
     {
-        return view("app_view.index", [
-            'now' => "finance"
+        return view("stocks.index", [
+            'now' => "stocks"
         ]);
     }
 }

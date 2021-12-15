@@ -6,8 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{asset('css/apps.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('js/bootstrap.min.js')}}">
-    <link rel="stylesheet" href="{{asset('js/jquery.min.js')}}">
     <title>Document</title>
     @livewireStyles
 </head>
@@ -19,8 +17,8 @@
                 <p>Btrade</p>
             </div>
             <div class="left">
-                <li class="active"><a href="">Finance</a></li>
-                <li><a href="">Stocks</a></li>
+                <li @if($now=="finance") class="active" @endif><a href="{{route('acceuil')}}">Finance</a></li>
+                <li  @if($now=="stocks") class="active" @endif><a href="{{route('stocks')}}">Stocks</a></li>
                 <li><a href="">Fabrications</a></li>
                 <li><a href="">Suivis Clients</a></li>
            </div>
@@ -32,6 +30,7 @@
             @yield("value")
         </div>
     </div>
-    @livewireScripts
+    <script src="{{asset('js/jquery.min.js')}}"></script>s
+     @livewireScripts
 </body>
 </html>
