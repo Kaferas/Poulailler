@@ -20,7 +20,7 @@
                 <li @if($now=="finance") class="active" @endif><a href="{{route('acceuil')}}">Finance</a></li>
                 <li  @if($now=="stocks") class="active" @endif><a href="{{route('stocks')}}">Stocks</a></li>
                 <li><a href="">Fabrications</a></li>
-                <li><a href="">Suivis Clients</a></li>
+                <li @if($now=="suivis") class="active" @endif ><a href="{{route('suivis')}}">Suivis Clients</a></li>
            </div>
            <div class="right">
             <li>Deconnexion</li>

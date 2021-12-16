@@ -37,7 +37,14 @@
         @endif
 
         @if ($vente)
-            <p>Ventes</p>
+            <div class=" d-inline-flex justify-center mt-3 h-50  border border-dark">
+                <div class="col-md-12 h-50 d-flex justify-content-center align-items-end ">
+                    <span class="text text-primary">Montant En caisse</span>
+                </div>
+                <div class="col-md-12 h-50 d-flex justify-content-center align-items-end text-light bg-success">
+                    <h3>{{$total}} FBU</h3>
+                </div>
+            </div>
         @endif
     </div>
 </div>

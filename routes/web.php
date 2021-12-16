@@ -3,6 +3,7 @@
 use Facade\FlareClient\View;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\SuivisController;
 use App\Http\Controllers\AcceuilController;
 
 /*
@@ -16,12 +17,18 @@ use App\Http\Controllers\AcceuilController;
 |
 */
 
+// Route::group(['middleware' => ['auth']], function () {
+Route::resource('roles', RoleController::class);
+
 Route::get('/', [AcceuilController::class, "index"])->name("acceuil");
 
 Route::get("stocks", [StockController::class, 'index'])->name("stocks");
+
+Route::get("suivis", [SuivisController::class, 'index'])->name("suivis");
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
+// });

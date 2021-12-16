@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Ventes;
+use App\Models\Clients;
 use App\Models\Produit;
 use Livewire\Component;
 
@@ -15,6 +17,9 @@ class Vente extends Component
     public $rabais;
     public $maxQty = 1;
     public $client = null;
+    public $clients;
+    public $clientslist;
+    public $paymethod;
 
     public function addClient()
     {
@@ -25,6 +30,10 @@ class Vente extends Component
         $this->totalMount = $this->prixunitaire * $this->qty;
     }
 
+    public function recalcule()
+    {
+        $this->totalMount = $this->totalMount - (($this->rabais * $this->prixunitaire) / 100 * $this->qty);
+    }
     public function triggerProduct()
     {
         $choosePro = Produit::find($this->produit);
@@ -35,6 +44,30 @@ class Vente extends Component
     public function mount()
     {
         $this->produits = Produit::all();
+        $this->clients = Clients::all();
+    }
+
+    public function save()
+    {
+        $this->validate([
+            'produit' => "required|integer",
+            'prixunitaire' => "required|integer",
+            'qty' => "required|integer",
+            'totalMount' => "required|integer",
+            'rabais' => "integer",
+            'clientslist' => "required|integer",
+            'paymethod' => "required|string"
+        ]);
+        Ventes::create([
+            'prodId' => $this->produit,
+            'montantUnit' => $this->prixunitaire,
+            'qty' => $this->qty,
+            'totalAmount' => $this->totalMount,
+            'rabais' => $this->rabais,
+            'ClientId' => $this->clientslist,
+            'paymethod' => $this->paymethod
+        ]);
+        return redirect(request()->header('Referer'));
     }
     public function render()
     {

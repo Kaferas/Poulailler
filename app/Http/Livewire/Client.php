@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Clients;
 use Livewire\Component;
 
 class Client extends Component
@@ -11,8 +12,16 @@ class Client extends Component
     public $adClient;
     public $telClient;
     public $cniClient;
-
-
+    public $recherche = NULL;
+   
+    public function fermerSearch()
+    {
+        $this->recherche = null;
+    }
+    public function changeSearch()
+    {
+        $this->recherche = 1;
+    }
     public function save()
     {
         $this->validate([
@@ -22,6 +31,14 @@ class Client extends Component
             'telClient' => "required|string",
             'cniClient' => "required|string",
         ]);
+        Clients::create([
+            "nomClient" => $this->noClient,
+            "prenomClient" => $this->preClient,
+            "adressClient" => $this->adClient,
+            "telClient" => $this->telClient,
+            "cniClient" => $this->cniClient
+        ]);
+        return redirect(request()->header('Referer'))->with('message', "Client bien Enregistre");
     }
     public function render()
     {
