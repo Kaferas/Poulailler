@@ -3,14 +3,32 @@
 namespace App\Http\Livewire;
 
 use App\Models\Ventes;
+use App\Models\Produit;
 use Livewire\Component;
+use App\Models\Depenses;
+use App\Models\Operations;
 use Livewire\WithPagination;
 
 class Finance extends Component
 {
     use WithPagination;
-    public $vente = 0;
+    public $vente = 1;
     public $operation = 0;
+    public $products;
+    public $depenseForm = 0;
+    protected $listeners = [
+        'pop' => 'popin'
+    ];
+
+    public function popin($id)
+    {
+        $this->depenseForm = $id;
+    }
+
+    public function mount()
+    {
+        $this->products = Produit::all();
+    }
 
     public function changeVente()
     {
@@ -25,7 +43,8 @@ class Finance extends Component
     public function render()
     {
         return view('livewire.finance', [
-            'total' => Ventes::sum("totalAmount")
+            'total' => Ventes::sum("totalAmount"),
+            'totalDep' => Operations::sum("montant")
         ]);
     }
 }

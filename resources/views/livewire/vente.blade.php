@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="col-md-5 mt-3 pl-4">
+<div class="row col-md-12">
+    <div class="col-md-6 mt-3 pl-4">
         @if (isset($message))
             <div class="alert alert-success">{{$message}}</div>
         @endif
@@ -18,7 +18,7 @@
                 <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="form-group ">
+            <div class="form-group col-md-5">
                 <label for="">Montant Produit:</label>
                 <input type="number" name="" id="" class="form-control col-md-10 border border-dark" disabled wire:model="prixunitaire">
                 @error('prixunitaire')
@@ -55,7 +55,7 @@
                             <option value="{{$cli->id}}">{{$cli->nomClient}}&nbsp{{$cli->prenomClient}}</option>
                         @endforeach
                     </select>
-                   
+
                     @error('clientslist')
                     <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>
                     @enderror
@@ -72,7 +72,7 @@
                    <input type="radio" id="" value="Credit" name="modePaie" wire:model="paymethod">
                    <label for="" class="text text-primary">Credit</label>
                 </div>
-    
+
                 @error('paymethod')
                 <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>
                 @enderror

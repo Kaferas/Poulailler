@@ -43,7 +43,7 @@ class Vente extends Component
     }
     public function mount()
     {
-        $this->produits = Produit::all();
+        $this->produits = Produit::where('Quantite', '>', 0)->get();
         $this->clients = Clients::all();
     }
 
@@ -67,6 +67,8 @@ class Vente extends Component
             'ClientId' => $this->clientslist,
             'paymethod' => $this->paymethod
         ]);
+        $res = Produit::find($this->produit)->Quantite - $this->qty;
+        Produit::find($this->produit)->update(["Quantite" => $res]);
         return redirect(request()->header('Referer'));
     }
     public function render()

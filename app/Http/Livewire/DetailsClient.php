@@ -8,6 +8,17 @@ use Livewire\Component;
 class DetailsClient extends Component
 {
     public $search;
+    public $clId;
+
+    public function disable($id)
+    {
+        $this->clId = $id;
+        // dd($this->clId);
+        Clients::find($this->clId)->update([
+            'etat' => 0
+        ]);
+    }
+
     public function render()
     {
 

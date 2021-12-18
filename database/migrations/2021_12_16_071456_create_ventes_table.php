@@ -24,7 +24,6 @@ class CreateVentesTable extends Migration
             $table->string("paymethod");
             $table->timestamps();
         });
-        return redirect(request()->header('REFERER'))
     }
 
     /**

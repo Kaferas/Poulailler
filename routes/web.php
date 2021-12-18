@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SuivisController;
 use App\Http\Controllers\AcceuilController;
+use App\Http\Controllers\FabricationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::get('/', [AcceuilController::class, "index"])->name("acceuil");
 Route::get("stocks", [StockController::class, 'index'])->name("stocks");
 
 Route::get("suivis", [SuivisController::class, 'index'])->name("suivis");
+
+Route::get("fabrication", [FabricationController::class, 'index'])->name("fabrication");
 
 Route::get('/dashboard', function () {
     return view('dashboard');

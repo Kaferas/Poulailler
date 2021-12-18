@@ -1,49 +1,60 @@
 <div>
     <div class="d-flex justify-center align-items-center bg-dark col-md-4 list-unstyled p-1">
-        <li><a href="" wire:model="vente" class="col-5 text-white" wire:click.prevent="changeVente">Ventes</a></li>
+        <li><a href="" wire:model="vente" class="col-5 text-white" wire:click.prevent="changeVente">Restants</a></li>
         <li><a href="" wire:model="operation" class="col-5 text-white" wire:click.prevent="changeOperation">Operation</a></li>
     </div>
         @if ($operation)
-            <p>Operation</p>
-            <div class="jumbotron col-lg-6">
-                <h3 class="mb-3">Nouveau Produit</h3>
-            <form action="" method="post" class="col- p-0 ">
-                <div class="form-group">
-                    <label for="" class="text text-primary">Code Produit</label>
-                    <input type="text" name="npro" id="" class="form-control col-lg-6 border-dark h-25">
-                </div>
-                <div class="form-group">
-                    <label for="" class="text text-primary">Nom Produit</label>
-                    <input type="text" name="npro" id="" class="form-control col-lg-6 border-dark h-25">
-                </div>
-                <div class="form-group">
-                    <label for="" class="text text-primary">Quantite</label>
-                    <input type="number" name="qty" id="" class="form-control col-lg-6 border-dark h-25">
-                </div>
-                <div class="form-group">
-                    <label for="" class="text text-primary">Categorie</label>
-                    <select name="" id="" class="form-control col-lg-6 border-dark h-25">
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="" class="text text-primary">Prix unitaire</label>
-                    <input type="text" name="priceunit" id="" class="form-control col-lg-6 border-dark h-25">
-                </div>
-            </form>
-        </div>
+            <div class="row">
+                @livewire("operation")
+               @if ($depenseForm)
+                @livewire("depense")
+               @endif
+            </div>
         @endif
 
         @if ($vente)
-            <div class=" d-inline-flex justify-center mt-3 h-50  border border-dark">
-                <div class="col-md-12 h-50 d-flex justify-content-center align-items-end ">
-                    <span class="text text-primary">Montant En caisse</span>
+            <div class=" d-inline-flex justify-center mt-3 h-50  col-md-12">
+                <div class="col-md-6 h-50">
+                    <div class="col-md-12 h-50 d-flex justify-content-around align-items-end ">
+                        <span class="text text-dark">Montant En caisse</span>
+                    </div>
+                    <div class="col-md-12 h-50 d-flex justify-content-around align-items-betweens text-light bg-success">
+                        <h3>{{$total}} FBU</h3>
+                    </div>
                 </div>
-                <div class="col-md-12 h-50 d-flex justify-content-center align-items-end text-light bg-success">
-                    <h3>{{$total}} FBU</h3>
+                <div class="col-md-6 h-50">
+                    <div class="col-md-12 h-25 d-flex justify-content-center align-items-end ">
+                        <span class="text text-dark">Depenses </span>
+                    </div>
+                    <div class="col-md-12 h-50 d-flex justify-content-center align-items-end text-light bg-danger">
+                        <h3>{{$totalDep}} FBU</h3>
+                    </div>
                 </div>
+            </div>
+            <div class="mt-3">
+                <h3 class="text-center">Produits restants</h3>
+                <table class="table">
+                    <thead class="text-center">
+                      <tr>
+                        <th scope="col">Nom Produit</th>
+                        <th scope="col">Prix Unitaire</th>
+                        <th scope="col">Quantite</th>
+                        <th scope="col">Categorie</th>
+                        <th scope="col">Fournisseur</th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-center">
+                     @foreach ($products as $produit)
+                     <tr>
+                        <td>{{$produit->nomProduit}}</td>
+                        <td>{{$produit->prixUnitaire}}</td>
+                        <td>{{$produit->Quantite}}</td>
+                        <td>{{$produit->categories->nameCat}}</td>
+                        <td>{{$produit->fournisseurs->name}}&nbsp;{{$produit->fournisseurs->prenom}}</td>
+                      </tr>
+                     @endforeach
+                    </tbody>
+                  </table>
             </div>
         @endif
     </div>

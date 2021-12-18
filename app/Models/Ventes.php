@@ -12,8 +12,8 @@ class Ventes extends Model
 
     protected $fillable = ['prodId', 'montantUnit', 'qty', 'totalAmount', 'rabais', 'ClientId', 'paymethod'];
 
-    public function produit()
+    public function produits()
     {
-        return $this->belongsTo(Produit::class, 'id');
+        return $this->belongsTo(Produit::class, 'prodId', 'id');
     }
 }
