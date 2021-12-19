@@ -15,6 +15,13 @@ class DetailsVente extends Component
         'seeMore'
     ];
 
+    public function activer($id)
+    {
+        $this->idClient = $id;
+        Clients::find($this->idClient)->update(['etat' => 1]);
+        return redirect(request()->header('Referer'));
+    }
+
     public function seeMore($chooseId)
     {
         $this->idClient = $chooseId;

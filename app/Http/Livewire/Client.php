@@ -7,13 +7,34 @@ use Livewire\Component;
 
 class Client extends Component
 {
+    public $edition = null;
+    public $idClient;
     public $noClient;
     public $preClient;
     public $adClient;
     public $telClient;
     public $cniClient;
     public $recherche = NULL;
-   
+    protected $listeners = [
+        'seeMore',
+        'see'
+    ];
+
+    public function see($id)
+    {
+        $this->idClient = $id;
+        $this->edition = 1;
+        $found = Clients::find($this->idClient);
+        $this->noClient = $found->nomClient;
+        $this->preClient = $found->prenomClient;
+        $this->adClient = $found->adressClient;
+        $this->telClient = $found->telClient;
+        $this->cniClient = $found->cniClient;
+    }
+    public function seeMore($id)
+    {
+        $this->idClient = $id;
+    }
     public function fermerSearch()
     {
         $this->recherche = null;
@@ -31,13 +52,19 @@ class Client extends Component
             'telClient' => "required|string",
             'cniClient' => "required|string",
         ]);
-        Clients::create([
+        $data = [
             "nomClient" => $this->noClient,
             "prenomClient" => $this->preClient,
             "adressClient" => $this->adClient,
             "telClient" => $this->telClient,
             "cniClient" => $this->cniClient
-        ]);
+        ];
+        if ($this->idClient) {
+            Clients::find($this->idClient)->update($data);
+        } else {
+
+            Clients::create($data);
+        }
         return redirect(request()->header('Referer'))->with('message', "Client bien Enregistre");
     }
     public function render()

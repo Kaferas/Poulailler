@@ -13,6 +13,7 @@ class Stock extends Component
 
     use WithPagination;
 
+    public $search;
     public $aproduit = 1;
     public $vproduit = 0;
     public $categorie;
@@ -99,7 +100,14 @@ class Stock extends Component
     public function render()
     {
         return view('livewire.stock', [
-            'toutPro' => Produit::all()
+            'toutPro' => Produit::where(function ($query) {
+                if ($this->search != "") {
+                    $query->where('nomProduit', 'like', '%' . $this->search . '%')
+                        ->orWhere('codeProduit', 'like', '%' . $this->search . '%');
+                } else {
+                    $query = Produit::all();
+                }
+            })->paginate(4)
         ]);
     }
 }

@@ -79,10 +79,35 @@
             </div>
             <div class="form-group">
                 <button class="btn btn-primary col-md-5">Vendre</button>
+                <button class="btn btn-secondary" wire:click.prevent="afficherPro">Derniers Ventes</button>
             </div>
         </form>
     </div>
     @if ($client)
         @livewire("client")
+    @endif
+    @if($allPro)
+       <div class="col-md-6">
+        <h2 class="text text-primary">Derniers Ventes</h2>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Produit</th>
+                <th scope="col">Quantite</th>
+                <th scope="col">Client</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ($reports as $report)
+            <tr>
+             <th scope="row">{{$report->produits->nomProduit}}</th>
+             <td>{{$report->qty}}</td>
+             <td>{{$report->clients->nomClient}}</td>
+           </tr>
+             @endforeach
+            </tbody>
+        </table>
+        {{-- {$links}} --}}
+       </div>
     @endif
 </div>

@@ -13,9 +13,16 @@ class DetailsClient extends Component
     public function disable($id)
     {
         $this->clId = $id;
-        // dd($this->clId);
         Clients::find($this->clId)->update([
             'etat' => 0
+        ]);
+    }
+    public function enable($id)
+    {
+        $this->clId = $id;
+        dd($this->clId);
+        Clients::find($this->clId)->update([
+            'etat' => 1
         ]);
     }
 

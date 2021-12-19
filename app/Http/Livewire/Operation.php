@@ -23,7 +23,7 @@ class Operation extends Component
     {
         $this->depenseForm = 1;
     }
-
+    
     public function save()
     {
         $this->validate([

@@ -5,7 +5,8 @@
     </div>
     @if($aproduit)
        <div class="row">
-            <div class="container col-md-4 mt-5 border border-dark">
+           <div class="container col-md-4 mt-3 border border-dark">
+               <h2 class="text text-primary">Nouveau Produit</h2>
                 <form action="" method="post" class="p-3" wire:submit.prevent="save">
                     <div class="row border-dark">
                         <div class="form-group mr-1">
@@ -93,6 +94,7 @@
             @if($afficherPro)
               <div class="col-md-6">
                 <h2 class="mb-4">Produit Disponibles</h2>
+                <input type="text" name="" id="" class="form-control col-md-6" placeholder="Rechercher Ici ..." wire:model="search">
                 <table class="table">
                     <thead>
                       <tr>
@@ -117,7 +119,8 @@
                       </tr>
                       @endforeach
                     </tbody>
-                  </table>
+                </table>
+                {{$toutPro->links()}}
               </div>
             @endif
            <div class="col-md-6">

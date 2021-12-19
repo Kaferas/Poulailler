@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Depenses;
 use App\Models\Ventes;
 use App\Models\Produit;
 use Livewire\Component;
-use App\Models\Depenses;
-use App\Models\Operations;
 use Livewire\WithPagination;
+use App\Models\Operations;
 
 class Finance extends Component
 {

@@ -20,9 +20,9 @@
                 <td>{{$single->adressClient}}</td>
                 <td>{{$single->telClient}}</td>
                 <td>
-                    <button class="btn btn-warning col-sm-5">Modifier</button>
+                    <button class="btn btn-warning col-sm-5" wire:click="$emit('see',{{$single->id}})">Modifier</button>
                     <button class="btn btn-primary col-sm-5" wire:click="$emit('seeMore',{{$single->id}})">Voir plus</button>
-                    <button class="btn btn-danger col-sm-6"  wire:click.prevent="disable({{$single->id}})">Desactiver</button>
+                    <button class="btn btn-danger col-sm-6" @if ($single->etat == 0) disabled @endif  wire:click.prevent="disable({{$single->id}})">Desactiver</button>
                 </td>
               </tr>
             @endforeach

@@ -6,24 +6,39 @@ use App\Models\Ventes;
 use App\Models\Clients;
 use App\Models\Produit;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Vente extends Component
 {
+    use WithPagination;
+
     public $produits;
     public $produit;
     public $prixunitaire;
     public $qty;
     public $totalMount;
-    public $rabais;
+    public $rabais = 0;
     public $maxQty = 1;
     public $client = null;
     public $clients;
     public $clientslist;
     public $paymethod;
+    public $allPro = 0;
+    public $reports = [];
 
+    public function afficherPro()
+    {
+        $this->allPro = 1;
+        $this->client = 0;
+        // $this->reports = Ventes::orderBy('id', "DESC")->get();
+        $reports = Ventes::paginate(5);
+        $links = $reports->links();
+        $this->reports = collect($reports->items());
+    }
     public function addClient()
     {
         $this->client = 1;
+        $this->allPro = 0;
     }
     public function calcultotal()
     {
@@ -44,7 +59,7 @@ class Vente extends Component
     public function mount()
     {
         $this->produits = Produit::where('Quantite', '>', 0)->get();
-        $this->clients = Clients::all();
+        $this->clients = Clients::where('etat', 1)->get();
     }
 
     public function save()
@@ -73,6 +88,8 @@ class Vente extends Component
     }
     public function render()
     {
-        return view('livewire.vente');
+        return view('livewire.vente', [
+            'reports' => $this->reports
+        ]);
     }
 }
