@@ -2,29 +2,71 @@
 
 
 @section("value")
-<div>
-    <div class="container">
+<div class="container row col-md-12">
+    <div class=" col-md-6">
+        @if (Session::has('message'))
+            <div class="alert alert-danger text-center">{{Session::get('message')}}</div>
+        @endif
         <h2 class="text text-primary">Nouveau Commande</h2>
-        <form action="" method="post" class="col-md-6 border border-dark p-4">
+        <form action="{{route("devis")}}" method="post" class="col-md-10 border border-dark p-4">
+            @csrf
             <div class="form-group">
-                <label for="" class="text text-priamry">CLIENT:</label>
-                <div id="frame">
-                    <input type="button" value="+" class="addBtn btn btn-primary p-1">
-                  </div>
-                <select name="" id="" class="form-control">
+                <label for="">Nom Devis:</label>
+                <input type="text" name="nameDev" id="" class="form-control">
+                <input type="hidden" name="code">
+            </div>
+
+            <div class="form-group">
+                <label for="" class="text text-primary">CLIENT:</label>
+                <select name="clientId" id="" class="form-control">
                     <option value="">Choisissez Client</option>
                     @foreach ($clients as $client)
                         <option value="{{$client->id}}">{{$client->nomClient}}&nbsp{{$client->prenomClient}}</option>
                     @endforeach
                 </select>
+                @error('clientId')
+                    <div class="alert alert-danger">{{$message}}</div>
+                @enderror
             </div>
             <div class="form-group " id="order">
+                <div class="row">
+                    <label for="" class="text text-primary d-block">DRESSER DEVIS: &nbsp;</label>
+                <div id="frame">
+                    <input type="button" value="+" class="addBtn btn btn-primary p-1">
+                  </div>
+                </div>
             </div>
             <div class="form-group">
-                <button class="btn btn-success">Enregistrer Commande</button>
+                <button  type="submit" class="btn btn-success">Enregistrer Commande</button>
             </div>
         </form>
 
+    </div>
+    <div class="col-md-6">
+        <h3 class="text text-warning">Commande Faits</h3>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Commande Par</th>
+                <th scope="col">Nom Commande</th>
+                <th scope="col">Date Commande</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                @foreach ($commande as $one)
+                <tr>
+                    <td>{{$one->clients->nomClient}}&nbsp;{{$one->clients->prenomClient}}</td>
+                    <td>{{$one->nom_devis}}</td>
+                    <td>{{date('d/m/Y',strtotime($one->created_at   ))}}</td>
+                    <td>
+                        <a class="btn btn-md btn-primary p-1 text-light" href="{{route('detailsDevis',$one->id)}}">Voir Details</a>
+                        <a class=" btn btn-md btn-success p-1 text-light" @if ($one->etat == 1) disabled @endif href="{{route('finaliser',$one->id)}}">Finaliser</a>
+                    </td>
+                  </tr>
+                @endforeach
+            </tbody>
+          </table>
     </div>
 </div>
 <script>
@@ -35,10 +77,10 @@
           var montant = document.createElement("input");
         newBtn.setAttribute("type","text");
         newBtn.setAttribute("name","commande[]");
-        newBtn.setAttribute("placeholder","Votre Motif Ici");
+        newBtn.setAttribute("placeholder","Materiel a utiliser");
         montant.setAttribute("type","number");
         montant.setAttribute("name","montant[]");
-        montant.setAttribute("placeholder","Votre Montant Ici");
+        montant.setAttribute("placeholder","Montant equivalant");
         newBtn.style.width="200px";
         newBtn.style.display=" inline-block";
         montant.style.width="200px";

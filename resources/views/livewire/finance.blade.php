@@ -14,19 +14,27 @@
 
         @if ($vente)
             <div class=" d-inline-flex justify-center mt-3 h-50  col-md-12">
-                <div class="col-md-6 h-50">
+                <div class="col-md-4 h-50">
                     <div class="col-md-12 h-50 d-flex justify-content-around align-items-end ">
-                        <span class="text text-dark">Montant En caisse</span>
+                        <span class="text text-dark">Montant Produit</span>
                     </div>
                     <div class="col-md-12 h-50 d-flex justify-content-around align-items-betweens text-light bg-success">
                         <h3>{{$total}} FBU</h3>
                     </div>
                 </div>
-                <div class="col-md-6 h-50">
+                <div class="col-md-4 h-50">
                     <div class="col-md-12 h-25 d-flex justify-content-center align-items-end ">
                         <span class="text text-dark">Depenses </span>
                     </div>
                     <div class="col-md-12 h-50 d-flex justify-content-center align-items-end text-light bg-danger">
+                        <h3>{{$totalDep}} FBU</h3>
+                    </div>
+                </div>
+                <div class="col-md-4 h-50">
+                    <div class="col-md-12 h-25 d-flex justify-content-center align-items-end ">
+                        <span class="text text-dark">Montant Fabrications </span>
+                    </div>
+                    <div class="col-md-12 h-50 d-flex justify-content-center align-items-end text-light bg-warning">
                         <h3>{{$totalDep}} FBU</h3>
                     </div>
                 </div>

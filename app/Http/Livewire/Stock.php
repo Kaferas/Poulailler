@@ -14,6 +14,7 @@ class Stock extends Component
     use WithPagination;
 
     public $search;
+    public $vfabr;
     public $aproduit = 1;
     public $vproduit = 0;
     public $categorie;
@@ -44,14 +45,22 @@ class Stock extends Component
         $this->categories = Categories::all();
         $this->fournisseurs = Fournisseurs::all();
     }
+    public function vfabrication()
+    {
+        $this->vfabr = 1;
+        $this->aproduit = 0;
+        $this->vproduit = 0;
+    }
     public function ajPro()
     {
         $this->aproduit = 1;
+        $this->vfabr = 0;
         $this->vproduit = 0;
     }
     public function changePro()
     {
         $this->aproduit = 0;
+        $this->vfabr = 0;
         $this->vproduit = 1;
     }
     public function displaymodal()

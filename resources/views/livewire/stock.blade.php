@@ -1,7 +1,8 @@
 <div>
-    <div class="bg-dark d-flex justify-center list-unstyled align-items-end col-md-3 ml-5 p-1">
-        <li><a  class="text-white col-md-5" href="" wire:model="aproduit" wire:click.prevent="ajPro">Ajout Produit</a></li>
-        <li><a href="" class="text-white col-md-5" wire:model="vproduit" wire:click.prevent="changePro">Vente Produit</a></li>
+    <div class="bg-dark d-flex justify-center list-unstyled align-items-end col-md-5 ml-5 p-1">
+        <li><a  class="text-white col-md-4 text-center" href="" wire:model="aproduit" wire:click.prevent="ajPro">Ajout Produit</a></li>
+        <li><a href="" class="text-white col-md-4 text-center" wire:model="vproduit" wire:click.prevent="changePro">Vente Produit</a></li>
+        <li class="text-center"><a href="" class="text-white col-md-4 " wire:model="vproduit" wire:click.prevent="vfabrication">Vente Fabrication</a></li>
     </div>
     @if($aproduit)
        <div class="row">
@@ -130,5 +131,8 @@
     @endif
     @if($vproduit)
        @livewire("vente")
+    @endif
+    @if($vfabr)
+       <h2>Fabrication Vente</h2>
     @endif
 </div>

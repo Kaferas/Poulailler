@@ -29,6 +29,12 @@ Route::get("suivis", [SuivisController::class, 'index'])->name("suivis");
 
 Route::get("fabrication", [FabricationController::class, 'index'])->name("fabrication");
 
+Route::get("fabrication/{id}", [FabricationController::class, 'details'])->name("detailsDevis");
+
+Route::get("finaliser/{id}", [FabricationController::class, 'finaliser'])->name("finaliser");
+
+Route::post("fabrication", [FabricationController::class, 'store'])->name("devis");
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
