@@ -68,11 +68,11 @@
                     <tr>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
-                        <td @if ($user->role == "simple")
+                        <td @if ($user->role == "3")
                             class="text text-primary"
                             @else
                             class="text text-success"
-                        @endif>{{$user->role}}</td>
+                        @endif>{{$user->role==3 ? "Admin" : "Simple"}}</td>
                         <td>
                             {{-- <button class="btn btn-primary" wire:model="sseletItem({{$user->id}})">Modifier</button> --}}
                             <button class="btn btn-danger">Desactiver</button>

@@ -73,9 +73,9 @@ class Vente extends Component
             'rabais' => "integer",
             'clientslist' => "required|integer",
             'paymethod' => "required|string",
-            'numeroChek' => "required|string"
+            // 'numeroChek' => "string"
         ]);
-        Ventes::create([
+        $ventId = Ventes::create([
             'prodId' => $this->produit,
             'montantUnit' => $this->prixunitaire,
             'qty' => $this->qty,
@@ -87,7 +87,7 @@ class Vente extends Component
         ]);
         $res = Produit::find($this->produit)->Quantite - $this->qty;
         Produit::find($this->produit)->update(["Quantite" => $res]);
-        return redirect(request()->header('Referer'));
+        return redirect(route("receipt-vente", $ventId));
     }
     public function render()
     {

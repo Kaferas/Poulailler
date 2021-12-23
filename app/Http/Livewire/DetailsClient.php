@@ -20,7 +20,7 @@ class DetailsClient extends Component
     public function enable($id)
     {
         $this->clId = $id;
-        dd($this->clId);
+        // dd($this->clId);
         Clients::find($this->clId)->update([
             'etat' => 1
         ]);

@@ -38,9 +38,12 @@
             @yield("value")
         </div>
     </div>
-    <div class=" col-md-12 bg-dark h-50 text text-light d-flex justify-content-center align-items-center">
-        <img src="{{asset("img/icon.png")}}" alt="" width="50px">
+    <div class=" col-md-12 bg-dark h-50 text text-light d-flex justify-content-around align-items-center">
+        <span>Copyright 2   021</span>
+        <div>
+            <img src="{{asset("img/icon.png")}}" alt="" width="50px">
         <span>PMIC</span>
+        </div>
     </div>
     <script src="{{asset('js/jquery.min.js')}}"></script>
      @livewireScripts

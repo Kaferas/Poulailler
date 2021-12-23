@@ -19,7 +19,7 @@ class CreateFabricationsTable extends Migration
             $table->integer("prixFab");
             $table->integer("prixvente");
             $table->integer("quantite");
-            $table->integer("clientId")->nullable;
+            $table->integer("clientId")->nullable();
             $table->timestamps();
         });
     }

@@ -1,7 +1,8 @@
 <div>
-    <div class="d-flex justify-center align-items-center bg-dark col-md-4 list-unstyled p-1">
+    <div class="d-flex justify-content-around align-items-center bg-dark col-md-6 list-unstyled p-1">
         <li><a href="" wire:model="vente" class="col-5 text-white" wire:click.prevent="changeVente">Restants</a></li>
         <li><a href="" wire:model="operation" class="col-5 text-white" wire:click.prevent="changeOperation">Operation</a></li>
+        <li><a href="" wire:model="operation" class="col-5 text-white" wire:click.prevent="changeRapport">Rapports</a></li>
     </div>
         @if ($operation)
             <div class="row col-md-12">
@@ -35,7 +36,7 @@
                         <span class="text text-dark">Montant Fabrications </span>
                     </div>
                     <div class="col-md-12 h-50 d-flex justify-content-center align-items-end text-light bg-warning">
-                        <h3>0 FBU</h3>
+                        <h3>{{$fabrication}} FBU</h3>
                     </div>
                 </div>
             </div>
@@ -63,6 +64,35 @@
                      @endforeach
                     </tbody>
                   </table>
+            </div>
+        @endif
+
+        @if($rapport)
+        <div class="row d-flex justify-content-around align-items-center bg-dark p-0 m-2">
+                <h4 class="text text-primary">Rapport:</h4>
+                <div class="form-group m-1">
+                    <label for="" class="text text-primary">Categorie</label>
+                    <select name="" id="" class="form-control p-1" wire:model="db">
+                        <option value="">Choisissez la Categorie</option>
+                        <option value="Fabrications">Fabrications</option>
+                        <option value="Produits">Produits</option>
+                        <option value=""></option>
+                    </select>
+                    {{-- {{$db}} --}}
+                </div>
+                <div class="form-group m-1">
+                    <label for="" class="text text-primary">Du:</label>
+                    <input type="date" name="" id="" class="form-control p-1 m-1" wire:model="from">
+
+                </div>
+                <div class="form-group m-1">
+                    <label for="" class="text text-primary">Au:</label>
+                    <input type="date" name="" id="" class="form-control p-1 m-1" wire:model="to">
+                    {{-- {{$to}} --}}
+                </div>
+                <div class="form-group m-1">
+                    <button class="btn btn-success p-1 m-1">Print</button>
+                </div>
             </div>
         @endif
     </div>

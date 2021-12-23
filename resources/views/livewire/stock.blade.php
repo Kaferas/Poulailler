@@ -1,5 +1,5 @@
 <div>
-    <div class="bg-dark d-flex justify-center list-unstyled align-items-end col-md-5 ml-5 p-1">
+    <div class="bg-dark d-flex justify-content-around list-unstyled align-items-end col-md-5 ml-5 p-1">
         @if(Gate::allows("is-admin"))
         <li><a  class="text-white col-md-4 text-center" href="" wire:model="aproduit" wire:click.prevent="ajPro">Ajout Produit</a></li>
         @endif

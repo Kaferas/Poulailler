@@ -19,8 +19,9 @@ class CreateVentesTable extends Migration
             $table->double("montantUnit");
             $table->integer("qty");
             $table->double("totalAmount");
-            $table->integer("rabais")->default(0);
+            $table->integer("rabais")->nullable();
             $table->integer("ClientId");
+            $table->string("numeroChek")->nullable();
             $table->string("paymethod");
             $table->timestamps();
         });

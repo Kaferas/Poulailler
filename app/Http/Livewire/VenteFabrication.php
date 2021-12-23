@@ -33,16 +33,24 @@ class VenteFabrication extends Component
         $this->limit = Devis::find($this->produit)->quantite;
     }
 
+    public function resetField()
+    {
+        $this->produit = null;
+        $this->fabPrix = null;
+        $this->fabVente = null;
+        $this->qty = null;
+        $this->client = null;
+    }
+
     public function save()
     {
         $this->validate([
             'qty' => "required|integer",
             'produit' => "required|integer",
             'fabPrix' => "required|integer",
-            'fabVente' => "required|integer",
-            'client' => "required|integer",
+            'fabVente' => "required|integer"
         ]);
-        Fabrication::create([
+        $fab = Fabrication::create([
             'produitId' => $this->produit,
             'prixFab' => $this->fabPrix,
             'prixvente' => $this->fabVente,
@@ -51,7 +59,9 @@ class VenteFabrication extends Component
         ]);
         $res = Devis::find($this->produit)->quantite - $this->qty;
         Devis::find($this->produit)->update(['quantite' => $res]);
-        Session::flash('message', "Vente bien Faite");
+        return redirect(route("receipt", $fab->id));
+        // Session::flash('message', "Vente bien Faite");
+        // $this->resetField();
     }
     public function render()
     {

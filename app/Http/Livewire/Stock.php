@@ -16,7 +16,7 @@ class Stock extends Component
     public $search;
     public $edition = null;
     public $vfabr;
-    public $aproduit = 0;
+    public $aproduit = 1;
     public $vproduit = 0;
     public $categorie;
     public $categorieid;

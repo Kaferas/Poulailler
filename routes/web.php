@@ -8,6 +8,8 @@ use App\Http\Controllers\AcceuilController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\FabricationController;
+use App\Models\Fabrication;
+use App\Models\Ventes;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get("users", [RegisteredUserController::class, 'create'])->name("users");
 
     Route::post("users", [RegisteredUserController::class, 'store'])->name("store.users");
+
+    Route::get("receipt/{id}", function ($id) {
+        return view("receipt.index", [
+            'id' => Fabrication::find($id)
+        ]);
+    })->name("receipt");
+
+    Route::get("vente-receipt/{id}", function ($id) {
+        return view("receipt.venteReceipt", [
+            'id' => Ventes::find($id)
+        ]);
+    })->name("receipt-vente");
 
     Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])->name("logout");
 });

@@ -72,7 +72,7 @@
                    <input type="radio" id="" value="Credit" name="modePaie" wire:model="paymethod">
                    <label for="" class="text text-primary">Credit</label>
                    @if ($paymethod == "Cheque")
-                   <input type="text" name="" id="" class="form-control border-primary" placeholder="Numero du cheque" wire:model="numeroChek">
+                   <input type="text" name="" id="" class="form-control border-primary" placeholder="Numero du cheque" wire:model="numeroChek" value="0">
                    @error($numeroChek)
                         <div class="alert alert-danger">{{$message}}</div>
                    @enderror
