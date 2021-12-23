@@ -51,4 +51,11 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    public function deconnexion()
+{
+    auth()->logout();
+
+    return redirect('/');
+}
 }

@@ -30,17 +30,11 @@ class FabricationController extends Controller
             'clientId' => "required",
             'nameDev' => "required|string",
         ]);
-        // Devis::create([
-        //     'nom_devis' => $request->nameDev,
-        //     'codeDevis' => $this->commandeCode,
-        //     'ClId' => $request->clientId
-        // ]);
-        // dd($dId[0]);
         DB::transaction(function () use ($request) {
             $devis = new Devis;
             $devis->nom_devis = $request->nameDev;
             $devis->codeDevis = $this->commandeCode;
-            $devis->ClId = $request->clientId;
+            $devis->quantite = $request->clientId;
             $devis->save();
             $dId = $devis->id;
 

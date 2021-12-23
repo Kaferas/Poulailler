@@ -4,7 +4,7 @@
         <li><a href="" wire:model="operation" class="col-5 text-white" wire:click.prevent="changeOperation">Operation</a></li>
     </div>
         @if ($operation)
-            <div class="row">
+            <div class="row col-md-12">
                 @livewire("operation")
                @if ($depenseForm)
                 @livewire("depense")
@@ -35,13 +35,13 @@
                         <span class="text text-dark">Montant Fabrications </span>
                     </div>
                     <div class="col-md-12 h-50 d-flex justify-content-center align-items-end text-light bg-warning">
-                        <h3>{{$totalDep}} FBU</h3>
+                        <h3>0 FBU</h3>
                     </div>
                 </div>
             </div>
             <div class="mt-3">
                 <h3 class="text-center">Produits restants</h3>
-                <table class="table">
+                <table class="table table-striped">
                     <thead class="text-center">
                       <tr>
                         <th scope="col">Nom Produit</th>

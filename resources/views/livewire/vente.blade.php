@@ -3,8 +3,8 @@
         @if (isset($message))
             <div class="alert alert-success">{{$message}}</div>
         @endif
-        <h2 class="text text-primary">Section Vente</h2>
         <form action="" method="post" class="border border-dark p-4" wire:submit.prevent="save">
+            <h2 class="text text-primary mb-2">Section Vente</h2>
            <div class="row">
             <div class="form-group col-md-5">
                 <label for="">Choisisssez Produit</label>
@@ -71,6 +71,12 @@
                    <label for="" class="text text-primary">Cheque</label>
                    <input type="radio" id="" value="Credit" name="modePaie" wire:model="paymethod">
                    <label for="" class="text text-primary">Credit</label>
+                   @if ($paymethod == "Cheque")
+                   <input type="text" name="" id="" class="form-control border-primary" placeholder="Numero du cheque" wire:model="numeroChek">
+                   @error($numeroChek)
+                        <div class="alert alert-danger">{{$message}}</div>
+                   @enderror
+                  @endif
                 </div>
 
                 @error('paymethod')

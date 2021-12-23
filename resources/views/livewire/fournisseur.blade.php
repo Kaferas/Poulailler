@@ -3,7 +3,7 @@
    <form action="" method="post" wire:submit.prevent="save" >
     <div class="border border-dark col-md-10 p-3">
         <div class="form-group p-1">
-            <label for="">Nom Fournisseur</label>
+            <label for="">Nom</label>
             <input type="text" name="" id="" class="form-control col-md-6 border border-dark" wire:model="nomFourni">
             @error('nomFourni')
             <div class="alert alert-danger mt-1 col-md-6">{{ $message }}</div>

@@ -13,17 +13,15 @@
             <div class="form-group">
                 <label for="">Nom Devis:</label>
                 <input type="text" name="nameDev" id="" class="form-control">
+                @error('nameDev')
+                <div class="alert alert-danger">{{$message}}</div>
+            @enderror
                 <input type="hidden" name="code">
             </div>
 
             <div class="form-group">
-                <label for="" class="text text-primary">CLIENT:</label>
-                <select name="clientId" id="" class="form-control">
-                    <option value="">Choisissez Client</option>
-                    @foreach ($clients as $client)
-                        <option value="{{$client->id}}">{{$client->nomClient}}&nbsp{{$client->prenomClient}}</option>
-                    @endforeach
-                </select>
+                <label for="" class="text text-primary">Quantite:</label>
+                <input type="number" name="clientId" id="" class="form-control">
                 @error('clientId')
                     <div class="alert alert-danger">{{$message}}</div>
                 @enderror
@@ -43,11 +41,11 @@
 
     </div>
     <div class="col-md-6">
-        <h3 class="text text-warning">Commande Faits</h3>
+        <h3 class="text text-warning">Commande en Cours</h3>
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">Commande Par</th>
+                  <th scope="col">Quantite</th>
                 <th scope="col">Nom Commande</th>
                 <th scope="col">Date Commande</th>
                 <th scope="col">Action</th>
@@ -56,7 +54,7 @@
             <tbody>
                 @foreach ($commande as $one)
                 <tr>
-                    <td>{{$one->clients->nomClient}}&nbsp;{{$one->clients->prenomClient}}</td>
+                    <td>{{$one->quantite}}</td>
                     <td>{{$one->nom_devis}}</td>
                     <td>{{date('d/m/Y',strtotime($one->created_at   ))}}</td>
                     <td>

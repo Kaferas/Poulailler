@@ -36,16 +36,30 @@ body {
 .right li {
     list-style: none;
     width: 6fr;
-    /* background-color: red; */
+    color: red;
     height: 100%;
     line-height: 60px;
     text-align: center;
     min-width: 19%;
 }
+a {
+    text-decoration: none;
+}
+.right li a {
+    color: white;
+}
+.navigation a:hover,
+.right li a:hover {
+    color: yellow;
+    text-decoration: none;
+}
 .active {
     border-bottom: 3px solid yellow;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+}
+a {
+    color: white;
 }
 .right {
     width: 20%;
@@ -54,7 +68,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
 }
 .left a {
     color: white;

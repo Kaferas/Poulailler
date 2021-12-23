@@ -16,23 +16,31 @@
 
         <div class="navigation col-lg-12 col-md-12 col-sm-12">
             <div class="logo">
-                <img src="{{asset('img/icon.png')}}" alt="" srcset="" height="50px">
+                <a href="{{route("acceuil")}}" class="d-flex justify-content-center align-items-center">
+                    <img src="{{asset('img/icon.png')}}" alt="" srcset="" height="50px">
                 <span class="text text-light">PMIC</span>
+                </a>
             </div>
             <div class="left">
                 <li @if($now=="finance") class="active" @endif><a href="{{route('acceuil')}}">Finance</a></li>
                 <li  @if($now=="stocks") class="active" @endif><a href="{{route('stocks')}}">Stocks</a></li>
                 <li  @if($now=="fabrication") class="active" @endif><a href="{{route('fabrication')}}">Fabrications</a></li>
-                <li @if($now=="suivis") class="active" @endif ><a href="{{route('suivis')}}">Suivis Clients</a></li>
-                <li @if($now=="suivis") class="active" @endif ><a href="{{route('suivis')}}">Utilisateur</a></li>
+                @if(Gate::allows("is-admin"))
+                    <li @if($now=="suivis") class="active" @endif ><a href="{{route('suivis')}}">Suivis Clients</a></li>
+                    <li @if($now=="users") class="active" @endif ><a href="{{route('users')}}">Utilisateur</a></li>
+                @endif
            </div>
            <div class="right">
-            <li>Deconnexion</li>
+            <li><a href="{{route('logout')}}" >Deconnexion</a></li>
            </div>
         </div>
         <div class="main jumbotron p-0">
             @yield("value")
         </div>
+    </div>
+    <div class=" col-md-12 bg-dark h-50 text text-light d-flex justify-content-center align-items-center">
+        <img src="{{asset("img/icon.png")}}" alt="" width="50px">
+        <span>PMIC</span>
     </div>
     <script src="{{asset('js/jquery.min.js')}}"></script>
      @livewireScripts

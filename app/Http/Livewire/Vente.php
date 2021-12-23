@@ -23,6 +23,7 @@ class Vente extends Component
     public $clients;
     public $clientslist;
     public $paymethod;
+    public $numeroChek;
     public $allPro = 0;
     public $reports = [];
 
@@ -71,7 +72,8 @@ class Vente extends Component
             'totalMount' => "required|integer",
             'rabais' => "integer",
             'clientslist' => "required|integer",
-            'paymethod' => "required|string"
+            'paymethod' => "required|string",
+            'numeroChek' => "required|string"
         ]);
         Ventes::create([
             'prodId' => $this->produit,
@@ -80,6 +82,7 @@ class Vente extends Component
             'totalAmount' => $this->totalMount,
             'rabais' => $this->rabais,
             'ClientId' => $this->clientslist,
+            'numeroChek' => $this->numeroChek,
             'paymethod' => $this->paymethod
         ]);
         $res = Produit::find($this->produit)->Quantite - $this->qty;

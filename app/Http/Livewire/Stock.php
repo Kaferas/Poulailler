@@ -14,8 +14,9 @@ class Stock extends Component
     use WithPagination;
 
     public $search;
+    public $edition = null;
     public $vfabr;
-    public $aproduit = 1;
+    public $aproduit = 0;
     public $vproduit = 0;
     public $categorie;
     public $categorieid;
@@ -33,8 +34,22 @@ class Stock extends Component
     public function affProduit()
     {
         $this->afficherPro = 1;
+        $this->edition = null;
         $this->fournisseur = null;
         $this->categorie = null;
+    }
+    public function selectItem($id)
+    {
+        $this->edition = 1;
+        // dd($id);
+        $editable = Produit::find($id);
+        // dd($editable);
+        $this->codePro = $editable->codeProduit;
+        $this->nomPro = $editable->nomProduit;
+        $this->priUnit = $editable->prixUnitaire;
+        $this->categorieid = $editable->catId;
+        $this->fournisseursId = $editable->FournisseurId;
+        $this->qty = $editable->Quantite;
     }
     public function mount()
     {
@@ -95,14 +110,19 @@ class Stock extends Component
             "qty" => "required|integer",
             "fournisseursId" => "required|integer",
         ]);
-        Produit::create([
+        $data = [
             'codeProduit' => $this->codePro,
             'nomProduit' => $this->nomPro,
             'prixUnitaire' => $this->priUnit,
             'catId' => $this->categorieid,
             'FournisseurId' => $this->fournisseursId,
             'Quantite' => $this->qty
-        ]);
+        ];
+        if ($this->edition) {
+            Produit::find($this->edition)->update($data);
+        } else {
+            Produit::create($data);
+        }
         $this->resetFields();
         return redirect(request()->header('Referer'));
     }
