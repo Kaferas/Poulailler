@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{asset('css/apps.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="style.css">
+    {{-- <link rel="stylesheet" href="style.css"> --}}
     <link rel="icon" href="{{asset("img/icon.png")}}" sizes="16x16">
     <title>PMIC APP</title>
     @livewireStyles
@@ -39,13 +39,15 @@
         </div>
     </div>
     <div class=" col-md-12 bg-dark h-50 text text-light d-flex justify-content-around align-items-center">
-        <span>Copyright 2   021</span>
+        <span>Copyright 2021</span>
         <div>
             <img src="{{asset("img/icon.png")}}" alt="" width="50px">
         <span>PMIC</span>
         </div>
     </div>
-    <script src="{{asset('js/jquery.min.js')}}"></script>
-     @livewireScripts
+    {{-- <script src="{{asset('js/jquery.min.js')}}"></script> --}}
+
+    @yield("script")
+    @livewireScripts
 </body>
 </html>

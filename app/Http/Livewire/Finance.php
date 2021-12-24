@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Carbon\Carbon;
 use App\Models\Ventes;
 use App\Models\Produit;
 use Livewire\Component;
@@ -19,9 +20,7 @@ class Finance extends Component
     public $products;
     public $depenseForm = 0;
     public $rapport;
-    public $db;
-    public $base;
-    public $from;
+    public $from = null;
     public $to;
 
     protected $listeners = [
@@ -56,23 +55,20 @@ class Finance extends Component
         $this->vente = 0;
         $this->rapport = 0;
     }
-    public function decision()
-    {
-        if ($this->db == "Fabrications") {
-            return Fabrications::class;
-        } elseif ($this->db == "Produits") {
-            return  Produits::class;
-        } else {
-            return Produits::class;
-        }
-    }
+
     public function render()
     {
         return view('livewire.finance', [
             'total' => Ventes::sum("totalAmount"),
             'totalDep' => Operations::sum("montant"),
             'fabrication' => Fabrication::sum("prixvente"),
-
+            'operations' => Operations::where(function ($query) {
+                if ($this->from != "" && $this->to != "") {
+                    $query->whereBetween('created_at', [$this->from, $this->to]);
+                } else {
+                    $query = Operations::all();
+                }
+            })->paginate(4)
         ]);
     }
 }

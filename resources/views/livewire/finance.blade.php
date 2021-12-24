@@ -67,33 +67,51 @@
             </div>
         @endif
 
-        @if($rapport)
-        <div class="row d-flex justify-content-around align-items-center bg-dark p-0 m-2">
+    @if($rapport)
+        <div class="row d-flex justify-content-around align-items-center  p-0 m-2">
                 <h4 class="text text-primary">Rapport:</h4>
-                <div class="form-group m-1">
-                    <label for="" class="text text-primary">Categorie</label>
-                    <select name="" id="" class="form-control p-1" wire:model="db">
-                        <option value="">Choisissez la Categorie</option>
-                        <option value="Fabrications">Fabrications</option>
-                        <option value="Produits">Produits</option>
-                        <option value=""></option>
-                    </select>
-                    {{-- {{$db}} --}}
-                </div>
                 <div class="form-group m-1">
                     <label for="" class="text text-primary">Du:</label>
                     <input type="date" name="" id="" class="form-control p-1 m-1" wire:model="from">
-
                 </div>
                 <div class="form-group m-1">
                     <label for="" class="text text-primary">Au:</label>
                     <input type="date" name="" id="" class="form-control p-1 m-1" wire:model="to">
-                    {{-- {{$to}} --}}
+
                 </div>
-                <div class="form-group m-1">
-                    <button class="btn btn-success p-1 m-1">Print</button>
-                </div>
+
+        </div>
+        <table class="table table-striped" id='roll'>
+
+            <thead>
+              <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Motif</th>
+                <th scope="col">Montant</th>
+                <th scope="col">Depense type</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+                 {{-- @dump($operations) --}}
+                @foreach ($operations as $ope)
+                <tr class="text-center">
+                    <th scope="row">{{$loop->index+1}}</th>
+                    <td>{{$ope->motif}}</td>
+                    <td>{{$ope->montant}}</td>
+                    <td>{{$ope->depenses->nomDepense}}</td>
+                    <td>{{date('d-m-Y',strtotime($ope->created_at))}}</td>
+                </tr>
+               @endforeach
+            </tbody>
+
+            <div class="form-group m-1">
+                <button class="btn btn-success p-1 m-1" onclick="printDivs('roll')">Print</button>
             </div>
-        @endif
-    </div>
+          </table>
+    @endif
+
 </div>
+
+
+

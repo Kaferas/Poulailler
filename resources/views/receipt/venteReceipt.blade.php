@@ -50,7 +50,7 @@
                 </p>
                 <p class="identifier">
                     <span id="bold">Payment :</span>
-                    <span >Cash</span>
+                    <span >{{$id->paymethod}}</span>
                 </p>
             </div>
             <div class="items">
@@ -63,25 +63,16 @@
                     </thead>
                     <tbody>
                         <tr style="text-align:center">
-                            <td>{{$id->devis->nom_devis}}</td>
-                            <td>{{$id->quantite > 1 ? "$id->quantite Pc(s)" : "$id->quantite Pc" }}</td>
-                            <td>{{$id->prixFab}}</td>
-                            <td>{{$id->prixFab * $id->quantite}}</td>
+                            <td>{{$id->produits->nomProduit}}</td>
+                            <td>{{$id->qty }}</td>
+                            <td>{{$id->montantUnit}}</td>
+                            <td>{{$id->montantUnit*$id->qty}}</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
                             <td>
-                                <table>
-                                    <thead>
-                                        <th>PU TVAC</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr style="text-align:center">
-                                            <td>{{$id->prixvente}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+
                             </td>
                             <td>
                                 <table>
@@ -90,7 +81,7 @@
                                     </thead>
                                     <tbody>
                                         <tr style="text-align:center">
-                                            <td>{{$id->prixvente*$id->quantite }}</td>
+                                            <td>{{$id->montantUnit*$id->qty}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -102,7 +93,7 @@
             <div class="total">
                 <p class="d-flex justify-content-around">
                     <span id="bold">TOTAL GENERAL </span>
-                    <span class="text text-success" style="font-size:1.4em"><b>{{$id->prixvente*$id->quantite }}FBU</b></span>
+                    <span class="text text-success" style="font-size:1.4em"><b>{{$id->montantUnit*$id->qty}}FBU</b></span>
                 </p>
 
             </div>
@@ -113,7 +104,8 @@
             <div class="footer">
                 <span>9/3/2020</span>
                 <span>Kaferas</span>
-                <span>04:20:14 PM</span>
+                {{date_default_timezone_set('Africa/Bujumbura');}}
+                <span>{{date('h:m:s A')}}</span>
             </div>
         </div>
         <div class="print d-flex justify-content-around mt-2">
