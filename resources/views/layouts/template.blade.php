@@ -39,11 +39,15 @@
         </div>
     </div>
     <div class=" col-md-12 bg-dark h-50 text text-light d-flex justify-content-around align-items-center">
-        <span>Copyright 2021</span>
-        <div>
-            <img src="{{asset("img/icon.png")}}" alt="" width="50px">
+        <div class="p-1">
+            <img src="{{asset("img/icon.png")}}" alt="" width="40px">
         <span>PMIC</span>
         </div>
+        <div>
+            <span>Connecte en tant que: <i class="text text-primary">{{Auth::user()->name}}</i></span>
+        </div>
+        <span>Copyright 2021</span>
+
     </div>
     {{-- <script src="{{asset('js/jquery.min.js')}}"></script> --}}
 

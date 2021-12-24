@@ -77,7 +77,6 @@
                 <div class="form-group m-1">
                     <label for="" class="text text-primary">Au:</label>
                     <input type="date" name="" id="" class="form-control p-1 m-1" wire:model="to">
-
                 </div>
 
         </div>

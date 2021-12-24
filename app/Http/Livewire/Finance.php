@@ -68,7 +68,7 @@ class Finance extends Component
                 } else {
                     $query = Operations::all();
                 }
-            })->paginate(4)
+            })->paginate(10)
         ]);
     }
 }

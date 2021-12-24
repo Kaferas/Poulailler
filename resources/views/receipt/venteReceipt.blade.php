@@ -34,7 +34,7 @@
                 </p>
                 <p class="identifier">
                     <span id="bold">Client :</span>
-                    @if($id->clientId)
+                    @if($id->ClientId)
                     <span>{{$id->clients->nomClient}}&nbsp;{{$id->clients->prenomClient}}</span>
                     @else
                     <span>Client</span>
@@ -103,9 +103,10 @@
             </div>
             <div class="footer">
                 <span>9/3/2020</span>
-                <span>Kaferas</span>
-                {{date_default_timezone_set('Africa/Bujumbura');}}
-                <span>{{date('h:m:s A')}}</span>
+                <span>{{Auth::user()->name}}</span>
+                <span>
+                    {{date_default_timezone_set('Africa/Bujumbura') ? date('h:m:s A') : "" }}
+                </span>
             </div>
         </div>
         <div class="print d-flex justify-content-around mt-2">

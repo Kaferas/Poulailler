@@ -17,6 +17,7 @@ class CreateOperationsTable extends Migration
             $table->id();
             $table->string("motif")->nullable();
             $table->double("montant");
+            $table->double("montant");
             $table->integer("depenseId");
             $table->timestamps();
         });

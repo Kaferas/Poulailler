@@ -6,6 +6,7 @@ use App\Models\Produit;
 use Livewire\Component;
 use App\Models\Categories;
 use App\Models\Fournisseurs;
+use App\Models\Ventes;
 use Livewire\WithPagination;
 
 class Stock extends Component
@@ -19,6 +20,7 @@ class Stock extends Component
     public $aproduit = 1;
     public $vproduit = 0;
     public $categorie;
+    public $report = 0;
     public $categorieid;
     public $categories;
     public $codePro;
@@ -26,6 +28,8 @@ class Stock extends Component
     public $priUnit;
     public $produits;
     public $qty;
+    public $from;
+    public $to;
     public $fournisseur;
     public $fournisseursId;
     public $fournisseurs;
@@ -38,6 +42,7 @@ class Stock extends Component
         $this->fournisseur = null;
         $this->categorie = null;
     }
+
     public function selectItem($id)
     {
         $this->edition = 1;
@@ -62,6 +67,7 @@ class Stock extends Component
     }
     public function vfabrication()
     {
+        $this->report = 0;
         $this->vfabr = 1;
         $this->aproduit = 0;
         $this->vproduit = 0;
@@ -71,12 +77,21 @@ class Stock extends Component
         $this->aproduit = 1;
         $this->vfabr = 0;
         $this->vproduit = 0;
+        $this->report = 0;
     }
     public function changePro()
     {
         $this->aproduit = 0;
         $this->vfabr = 0;
         $this->vproduit = 1;
+        $this->report = 0;
+    }
+    public function vreport()
+    {
+        $this->aproduit = 0;
+        $this->vfabr = 0;
+        $this->vproduit = 0;
+        $this->report = 2;
     }
     public function displaymodal()
     {
@@ -136,7 +151,14 @@ class Stock extends Component
                 } else {
                     $query = Produit::all();
                 }
-            })->paginate(4)
+            })->paginate(4),
+            'stocks' => Ventes::where(function ($query) {
+                if ($this->from != "" && $this->to != "") {
+                    $query->whereBetween('created_at', [$this->from, $this->to]);
+                } else {
+                    $query = Ventes::all();
+                }
+            })->paginate(20)
         ]);
     }
 }

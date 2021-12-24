@@ -1,10 +1,11 @@
 <div>
-    <div class="bg-dark d-flex justify-content-around list-unstyled align-items-end col-md-5 ml-5 p-1">
+    <div class="bg-dark d-flex justify-content-between list-unstyled align-items-end col-md-6 ml-5 p-1">
         @if(Gate::allows("is-admin"))
-        <li><a  class="text-white col-md-4 text-center" href="" wire:model="aproduit" wire:click.prevent="ajPro">Ajout Produit</a></li>
+        <li><a  class="text-white col-md-4 text-center" href="" wire:model="o" wire:click.prevent="ajPro">Ajout Produit</a></li>
         @endif
         <li><a href="" class="text-white col-md-4 text-center" wire:model="vproduit" wire:click.prevent="changePro">Vente Produit</a></li>
         <li class="text-center"><a href="" class="text-white col-md-4 " wire:model="vproduit" wire:click.prevent="vfabrication">Vente Fabrication</a></li>
+        <li class="text-center"><a href="" class="text-white col-md-4 " wire:model="report" wire:click.prevent="vreport">Rapports</a></li>
     </div>
     @if($aproduit)
       @if($edition)
@@ -262,5 +263,53 @@
     @endif
     @if($vfabr)
        @livewire("vente-fabrication")
+    @endif
+    @if($report)
+        <div class="container">
+            <div class=" d-flex justify-content-lg-around mt-2">
+                <div class="form-group">
+                    <h2 class="text text-primary mt-3">Rapport Produits </h2>
+                </div>
+                <div class="form-group">
+                    <label for="" class="text text-primary ">Du</label>
+                    <input type="date" name="" id="" wire:model="from" class="form-control">
+
+                </div>
+                <div class="form-group">
+                    <label for="" class="text text-primary ">Au</label>
+                    <input type="date" name="" id="" wire:model="to" class="form-control">
+                </div>
+            </div>
+            <table class="table" id="vente">
+                <thead class="thead-light">
+                  <tr class="text text-center">
+                    <th scope="col">#</th>
+                    <th scope="col">Produit</th>
+                    <th scope="col">Quantite</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Rabais</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody >
+                @foreach ($stocks as $stock)
+                <tr class="text text-center">
+                    <th scope="row">{{$loop->index+1}}</th>
+                    <td>{{$stock->produits->nomProduit}}</td>
+                    <td>{{$stock->qty}}</td>
+                    <td>{{$stock->montantUnit}}</td>
+                    <td>{{$stock->rabais}}</td>
+                    <td>{{$stock->clients->nomClient}}&nbsp;{{$stock->clients->prenomClient}}</td>
+                    <td>{{$stock->totalAmount}}FBU</td>
+                  </tr>
+                @endforeach
+
+                </tbody>
+                <div class="form-group m-1">
+                    <button class="btn btn-primary p-1 m-1" onclick="printDivs('vente')">Print</button>
+                </div>
+            </table>
+        </div>
     @endif
 </div>

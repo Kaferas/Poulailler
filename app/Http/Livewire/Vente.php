@@ -7,6 +7,7 @@ use App\Models\Clients;
 use App\Models\Produit;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class Vente extends Component
 {
@@ -59,7 +60,7 @@ class Vente extends Component
     }
     public function mount()
     {
-        $this->produits = Produit::where('Quantite', '>', 0)->get();
+        $this->produits = Produit::all();
         $this->clients = Clients::where('etat', 1)->get();
     }
 
@@ -82,6 +83,7 @@ class Vente extends Component
             'totalAmount' => $this->totalMount,
             'rabais' => $this->rabais,
             'ClientId' => $this->clientslist,
+            'userId' => Auth::user()->id,
             'numeroChek' => $this->numeroChek,
             'paymethod' => $this->paymethod
         ]);

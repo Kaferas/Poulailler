@@ -11,7 +11,9 @@
                 <select name="" id="" class="form-control border border-dark" wire:model="produit" wire:change="triggerProduct">
                     <option value="">Choisissez Produit</option>
                     @foreach ($produits as $pro)
-                    <option value="{{$pro->id}}">{{$pro->nomProduit}}</option>
+                    <option value="{{$pro->id}}"@if ($pro->Quantite < 1)
+                        disabled class="text text-danger"
+                    @endif>{{$pro->nomProduit}}</option>
                     @endforeach
                 </select>
                 @error('produit')
