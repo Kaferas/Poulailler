@@ -17,7 +17,8 @@ class Vente extends Component
     public $produit;
     public $prixunitaire;
     public $qty;
-    public $min=1; 
+    public $min = 1;
+    public $venteid = 0;
     public $totalMount;
     public $rabais = 0;
     public $maxQty = 1;
@@ -63,6 +64,15 @@ class Vente extends Component
     {
         $this->produits = Produit::all();
         $this->clients = Clients::where('etat', 1)->get();
+    }
+
+    public function modVente($venteid)
+    {
+        // dd($this->produits);
+        // $this->venteid = $venteid;
+        // $found = Ventes::find($this->venteid);
+        // $this->produit = $found->prodId;
+        // $this->prixunitaire = $found->montantUnit;
     }
 
     public function save()

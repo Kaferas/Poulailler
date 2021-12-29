@@ -118,7 +118,7 @@
                      <td>{{$pro->prixUnitaire}}</td>
                      <td>{{$pro->Quantite}}</td>
                      <td>
-                         <button class="btn btn-danger ">Desactiver</button>
+                         {{-- <button class="btn btn-danger ">Desactiver</button> --}}
                          <button class="btn btn-primary">Modifier</button>
                      </td>
                    </tr>
@@ -242,7 +242,7 @@
                      <td>{{$pro->prixUnitaire}}</td>
                      <td>{{$pro->Quantite}}</td>
                      <td>
-                         <button class="btn btn-danger ">Desactiver</button>
+                         {{-- <button class="btn btn-danger ">Desactiver</button> --}}
                          <button class="btn btn-primary" wire:click.prevent="selectItem({{$pro->id}})">Modifier</button>
                      </td>
                    </tr>

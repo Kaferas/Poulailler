@@ -29,7 +29,9 @@ class Finance extends Component
 
     public function popin($id)
     {
+        // dd($id);
         $this->depenseForm = $id;
+        $this->emit("CategorieName", $this->depenseForm);
     }
 
     public function mount()
