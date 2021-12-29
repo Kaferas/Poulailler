@@ -7,11 +7,18 @@ use App\Models\Clients;
 use App\Models\detail_devis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class FabricationController extends Controller
 {
     public $commandeCode;
 
+    public function __construct()
+    {
+        if (Gate::allows("is-caissier")) {
+            return abort(403);
+        }
+    }
     public function index()
     {
         return view("fabrication.index", [

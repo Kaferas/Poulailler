@@ -44,7 +44,7 @@
                             <select name="role" id="" class="form-control mb-2 col-md-12">
                                 <option value=""></option>
                                 <option value="3">Admin</option>
-                                <option value="2">Caissier</option>
+                                <option value="2">Gestionnaire</option>
                                 <option value="1">Simple</option>
                             </select>
                         </div>
@@ -76,7 +76,7 @@
                                     class="text text-success"
                                 @else
                                     class="text text-danger"
-                                @endif>{{$user->role==3 ? "Admin" : (($user->role==2) ? "Caissier" : "Simple")}}</td>
+                                @endif>{{$user->role==3 ? "Admin" : (($user->role==2) ? "Gestionnaire" : "Simple")}}</td>
                             <td>
                                 {{-- <button class="btn btn-primary" wire:model="sseletItem({{$user->id}})">Modifier</button> --}}
                                 <button class="btn btn-danger">Desactiver</button>

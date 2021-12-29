@@ -103,7 +103,7 @@
                 <th scope="col">Produit</th>
                 <th scope="col">Quantite</th>
                 <th scope="col">Client</th>
-                <th scope="col">Action</th>
+                {{-- <th scope="col">Action</th> --}}
               </tr>
             </thead>
             <tbody>
@@ -112,7 +112,7 @@
              <th scope="row">{{$report->produits->nomProduit}}</th>
              <td>{{$report->qty}}</td>
              <td>{{$report->clients->nomClient}}</td>
-             <td><a href="" class="btn btn-primary"  wire:click.prevent="modVente({{$report->id}})">Modifier</a></td>
+             {{-- <td><a href="" class="btn btn-primary"  wire:click.prevent="modVente({{$report->id}})">Modifier</a></td> --}}
            </tr>
              @endforeach
             </tbody>

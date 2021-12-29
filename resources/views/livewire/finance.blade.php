@@ -1,17 +1,21 @@
 <div>
     <div class="d-flex justify-content-around align-items-center bg-dark col-md-6 list-unstyled p-1">
         <li><a href="" wire:model="vente" class="col-5 text-white" wire:click.prevent="changeVente">Restants</a></li>
-        <li><a href="" wire:model="operation" class="col-5 text-white" wire:click.prevent="changeOperation">Operation</a></li>
+        @if (Gate::allows("is-admin")|| Gate::allows("is-caissier"))
+            <li><a href="" wire:model="operation" class="col-5 text-white" wire:click.prevent="changeOperation">Operation</a></li>
+        @endif
         <li><a href="" wire:model="operation" class="col-5 text-white" wire:click.prevent="changeRapport">Rapports</a></li>
     </div>
-        @if ($operation)
-            <div class="row col-md-12">
-                @livewire("operation")
-               @if ($depenseForm)
-                @livewire("depense")
-               @endif
-            </div>
-        @endif
+       @if (Gate::allows("is-caissier") || Gate::allows("is-admin"))
+       @if ($operation)
+       <div class="row col-md-12">
+           @livewire("operation")
+          @if ($depenseForm)
+           @livewire("depense")
+          @endif
+       </div>
+   @endif
+       @endif
 
         @if ($vente)
             <div class=" d-inline-flex justify-center mt-3 h-50  col-md-12">
