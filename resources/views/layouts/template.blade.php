@@ -27,8 +27,8 @@
                 <li  @if($now=="fabrication") class="active" @endif><a href="{{route('fabrication')}}">Fabrications</a></li>
                 @if(Gate::allows("is-admin"))
                     <li @if($now=="suivis") class="active" @endif ><a href="{{route('suivis')}}">Suivis Clients</a></li>
-                    <li @if($now=="users") class="active" @endif ><a href="{{route('users')}}">Utilisateur</a></li>
                 @endif
+                <li @if($now=="users") class="active" @endif ><a href="{{route('users')}}">Profils</a></li>
            </div>
            <div class="right">
             <li><a href="{{route('logout')}}" >Deconnexion</a></li>

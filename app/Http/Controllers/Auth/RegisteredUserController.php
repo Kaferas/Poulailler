@@ -11,10 +11,12 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Redis;
 
 class RegisteredUserController extends Controller
 {
 
+    public $currentiD;
     /**
      * Display the registration view.
      *
@@ -22,16 +24,24 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        if (Gate::allows("is-admin")) {
-            return view('users.register', [
-                'now' => 'users',
-                'users' => User::all()
-            ]);
-        } else {
-            abort(403);
-        }
+
+        return view('users.register', [
+            'now' => 'users',
+            'users' => User::all()
+        ]);
     }
 
+    public function edit($id, Request $request)
+    {
+        $this->currentiD = $id;
+        $found = User::find($this->currentiD);
+        $found->name = $request->name;
+        $found->email = $request->email;
+        $found->password = Hash::make($request->password);
+        $found->role = $request->role;
+        $found->update();
+        return redirect()->back()->with("message", "Mise a jour Bien Faite");
+    }
     /**
      * Handle an incoming registration request.
      *

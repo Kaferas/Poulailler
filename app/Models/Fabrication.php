@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Produit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Fabrication extends Model
 {
@@ -13,6 +14,10 @@ class Fabrication extends Model
     public function clients()
     {
         return $this->belongsTo(Clients::class, "clientId", 'id');
+    }
+    public function produits()
+    {
+        return $this->belongsTo(Devis::class, "produitId", 'id');
     }
 
     public function devis()

@@ -44,6 +44,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post("users", [RegisteredUserController::class, 'store'])->name("store.users");
 
+    Route::post("users/edit/{id}", [RegisteredUserController::class, 'edit'])->name("users.edit");
+
     Route::get("receipt/{id}", function ($id) {
         return view("receipt.index", [
             'id' => Fabrication::find($id)
