@@ -81,7 +81,6 @@
 
         </div>
         <table class="table table-striped" id='roll'>
-
             <thead>
               <tr class="text-center">
                 <th scope="col">#</th>
@@ -101,13 +100,15 @@
                     <td>{{$ope->depenses->nomDepense}}</td>
                     <td>{{date('d-m-Y',strtotime($ope->created_at))}}</td>
                 </tr>
-               @endforeach
+                @endforeach
+                <tr>
+                    <h2 class="text-center m-2 text text-primary">Total : {{$operations->sum('montant')}}FBU</h2>
+                </tr>
             </tbody>
-
             <div class="form-group m-1">
                 <button class="btn btn-success p-1 m-1" onclick="printDivs('roll')">Print</button>
             </div>
-          </table>
+        </table>
     @endif
 
 </div>

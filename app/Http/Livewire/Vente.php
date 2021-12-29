@@ -17,6 +17,7 @@ class Vente extends Component
     public $produit;
     public $prixunitaire;
     public $qty;
+    public $min=1; 
     public $totalMount;
     public $rabais = 0;
     public $maxQty = 1;

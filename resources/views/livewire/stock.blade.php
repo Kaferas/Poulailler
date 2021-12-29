@@ -1,5 +1,5 @@
 <div>
-    <div class="bg-dark d-flex justify-content-between list-unstyled align-items-end col-md-6 ml-5 p-1">
+    <div class="bg-dark d-flex justify-content-around list-unstyled align-items-end col-md-6 ml-5 p-1">
         @if(Gate::allows("is-admin"))
         <li><a  class="text-white col-md-4 text-center" href="" wire:model="o" wire:click.prevent="ajPro">Ajout Produit</a></li>
         @endif
@@ -304,8 +304,11 @@
                     <td>{{$stock->totalAmount}}FBU</td>
                   </tr>
                 @endforeach
-
+                <tr>
+                    <h2 class="text-center m-2 text text-primary">Total : {{$stocks->sum('totalAmount')}}FBU</h2>
+                </tr>
                 </tbody>
+
                 <div class="form-group m-1">
                     <button class="btn btn-primary p-1 m-1" onclick="printDivs('vente')">Print</button>
                 </div>

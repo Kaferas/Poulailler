@@ -44,7 +44,7 @@
                     <div class="form-group ">
                         <label for="">Quantite:</label>
                         <label for="" class="text text-danger">En Stock {{$limit}}:</label>
-                        <input type="tex" name="quantite" id="" class="form-control" wire:model="qty" min="1" max={{$limit}} placeholder="Quantite Voulue">
+                        <input type="tex" name="quantite" id="" class="form-control" wire:model="qty" min="0" max={{$limit}} placeholder="Quantite Voulue">
                         @error('qty')
                         <div class="alert alert-danger">{{$message}}</div>
                     @enderror
@@ -68,7 +68,7 @@
             </form>
         </div>
         <div class="col-md-6">
-            
+
         </div>
     </div>
 </div>
