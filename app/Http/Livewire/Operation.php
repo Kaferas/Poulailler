@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Categories;
 use App\Models\Depenses;
 use App\Models\Operations;
+use App\Models\Produit;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,6 +21,9 @@ class Operation extends Component
     public $modif = 0;
     public  $montant;
     public $allinOne = 0;
+    public $specif = 'recette';
+    public $etat;
+    public $nomDemandeur;
 
     public function changeModif($identite)
     {
@@ -28,12 +32,17 @@ class Operation extends Component
         $this->motif = $found->motif;
         $this->montant = $found->montant;
         $this->depense = $found->depenseId;
+        $this->specif = $found->motif;
+        $this->nomDemandeur = $found->nomDemandeur;
     }
     public function mount()
     {
-        $this->depenses = Depenses::all();
+        $this->depenses = Depenses::where("etat",'recette')->get();
     }
-
+    public function changement()
+    {
+        $this->depenses = Depenses::where('etat',$this->specif)->get();
+    }
     public function dernierOperation()
     {
         $this->dernier = 1;
@@ -57,14 +66,16 @@ class Operation extends Component
     public function save()
     {
         $this->validate([
+            'nomDemandeur'=>"string",
             'motif' => "string",
             'depense' => "required|integer",
             'montant' => "required|integer"
         ]);
         $data = [
+            'nomDemandeur'=>$this->nomDemandeur,
             'motif' => $this->motif,
             'montant' => $this->montant,
-            'depenseId' => $this->depense
+            'depenseId' => $this->depense,
         ];
         if ($this->modif) {
             Operations::find($this->modif)->update($data);
@@ -80,7 +91,7 @@ class Operation extends Component
     {
         return view('livewire.operation', [
             'derniers' => Operations::paginate(5),
-            'allDepenses' => Depenses::all()
+            'allDepenses' => Depenses::orderBy('id',"asc")->paginate(5)
         ]);
     }
 }

@@ -7,24 +7,24 @@
         <li><a href="" wire:model="operation" class="col-5 text-white" wire:click.prevent="changeRapport">Rapports</a></li>
     </div>
        @if (Gate::allows("is-caissier") || Gate::allows("is-admin"))
-       @if ($operation)
-       <div class="row col-md-12">
-           @livewire("operation")
-          @if ($depenseForm)
-           @livewire("depense")
-          @endif
-       </div>
-   @endif
+        @if ($operation)
+            <div class="container row col-md-12">
+                @livewire("operation")
+                @if ($depenseForm)
+                @livewire("depense")
+               @endif
+            </div>
+        @endif
        @endif
 
         @if ($vente)
             <div class=" d-inline-flex justify-center mt-3 h-50  col-md-12">
                 <div class="col-md-4 h-50">
-                    <div class="col-md-12 h-50 d-flex justify-content-around align-items-end ">
-                        <span class="text text-dark">Montant Produit</span>
+                    <div class="col-md-5 h-50 d-flex justify-content-around align-items-end ">
+                        <span class="text text-dark">Montant Global</span>
                     </div>
-                    <div class="col-md-12 h-50 d-flex justify-content-around align-items-betweens text-light bg-success">
-                        <h3>{{$total}} FBU</h3>
+                    <div class="col-md-7 h-50 d-flex justify-content-around align-items-betweens text-light bg-success">
+                        <h3>{{$total + $fabrication}} FBU</h3>
                     </div>
                 </div>
                 <div class="col-md-4 h-50">
@@ -35,14 +35,7 @@
                         <h3>{{$totalDep}} FBU</h3>
                     </div>
                 </div>
-                <div class="col-md-4 h-50">
-                    <div class="col-md-12 h-25 d-flex justify-content-center align-items-end ">
-                        <span class="text text-dark">Montant Fabrications </span>
-                    </div>
-                    <div class="col-md-12 h-50 d-flex justify-content-center align-items-end text-light bg-warning">
-                        <h3>{{$fabrication}} FBU</h3>
-                    </div>
-                </div>
+
             </div>
             <div class="mt-3">
                 <h3 class="text-center">Produits restants</h3>
@@ -88,6 +81,7 @@
             <thead>
               <tr class="text-center">
                 <th scope="col">#</th>
+                <th scope="col">Nom Demandeur</th>
                 <th scope="col">Motif</th>
                 <th scope="col">Montant</th>
                 <th scope="col">Depense type</th>
@@ -99,6 +93,7 @@
                 @foreach ($operations as $ope)
                 <tr class="text-center">
                     <th scope="row">{{$loop->index+1}}</th>
+                    <td>{{$ope->nomDemandeur}}</td>
                     <td>{{$ope->motif}}</td>
                     <td>{{$ope->montant}}</td>
                     <td>{{$ope->depenses->nomDepense}}</td>

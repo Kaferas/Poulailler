@@ -1,5 +1,5 @@
 <div class="row col-md-6">
-    <div class="border border-primary mt-3 col-md-12">
+    <div class="border border-primary mt-3 col-12">
             <div class="m-2">
                 <a href="" class="btn btn-dark mt-2 p-1" wire:model="recherche" wire:click.prevent='changeSearch'>Rechercher</a>
                 <a href="" class="btn btn-danger mt-2 p-1" wire:model="recherche" wire:click.prevent='fermerSearch'>Fermer</a>

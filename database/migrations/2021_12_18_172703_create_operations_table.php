@@ -15,9 +15,10 @@ class CreateOperationsTable extends Migration
     {
         Schema::create('operations', function (Blueprint $table) {
             $table->id();
+            $table->string("nomDemandeur")->nullable();
             $table->string("motif")->nullable();
             $table->double("montant");
-            $table->double("montant");
+            $table->string('categorie');
             $table->integer("depenseId");
             $table->timestamps();
         });

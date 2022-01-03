@@ -80,9 +80,9 @@
         montant.setAttribute("name","montant[]");
         montant.setAttribute("placeholder","Montant equivalant");
         newBtn.style.width="200px";
-        newBtn.style.display=" inline-block";
+        // newBtn.style.display=" inline-block";
         montant.style.width="200px";
-        montant.style.display="inline-block";
+        // montant.style.display="inline-block";
         newBtn.style.margin="10px";
         newBtn.classname = "addBtn";
         container.appendChild(newBtn)

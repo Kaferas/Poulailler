@@ -24,14 +24,29 @@ class Finance extends Component
     public $to;
 
     protected $listeners = [
-        'pop' => 'popin'
+        'pop' => 'popin',
+        'popin'=>'pop',
+        "editDepense"
     ];
+
+    public function editDepense($name)
+    {
+        $this->depenseForm = $name[0];
+        $this->emit("hereYourData",$name);
+    }
 
     public function popin($id)
     {
+        $this->depenseForm = $id[0];
+        // dd($id[1]);
+        $this->emit("matchDepense", $id);
+
+    }
+    public function pop($id)
+    {
         // dd($id);
-        $this->depenseForm = $id;
-        $this->emit("CategorieName", $this->depenseForm);
+        $this->emit("CategorieName", $id);
+        $this->depenseForm = $id[0];
     }
 
     public function mount()
@@ -70,7 +85,9 @@ class Finance extends Component
                 } else {
                     $query = Operations::all();
                 }
-            })->paginate(10)
+            })
+            ->orderBy('id',"DESC")
+            ->paginate(10)
         ]);
     }
 }

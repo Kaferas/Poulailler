@@ -9,5 +9,5 @@ class Depenses extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nomDepense'];
+    protected $fillable = ['nomDepense', 'etat'];
 }

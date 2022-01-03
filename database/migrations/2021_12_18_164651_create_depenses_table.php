@@ -16,6 +16,7 @@ class CreateDepensesTable extends Migration
         Schema::create('depenses', function (Blueprint $table) {
             $table->id();
             $table->string("nomDepense")->unique();
+            $table->string("etat");
             $table->timestamps();
         });
     }

@@ -9,7 +9,7 @@ class Operations extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['motif', 'montant', 'depenseId'];
+    protected $fillable = ['motif', 'montant', 'depenseId','etat','nomDemandeur'];
 
     public function depenses()
     {

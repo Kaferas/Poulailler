@@ -51,6 +51,24 @@
         <span>Copyright 2021</span>
 
     </div>
+    <script>
+        <script>
+        function printDiv(el) {
+            var divContents = document.getElementById(el).innerHTML;
+            var a = window.open('', '', 'height=auto, width=30vw');
+            a.document.write('<html>');
+            a.document.write('<head>');
+            a.document.write('<link rel="stylesheet" href="{{asset("css/facture.css")}}"/>');
+            a.document.write('</head>');
+            a.document.write('<body>');
+            a.document.write(divContents);
+            a.document.write('</body>');
+            a.document.close();
+            a.print();
+        }
+        console.log("recu")
+    </script>
+    </script>
     {{-- <script src="{{asset('js/jquery.min.js')}}"></script> --}}
 
     @yield("script")

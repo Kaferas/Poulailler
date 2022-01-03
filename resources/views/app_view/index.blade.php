@@ -17,9 +17,11 @@
         a.document.write('</head>');
         a.document.write('<body>');
         a.document.write('<table class="table table-stripped text-center">');
-        a.document.write('<table>');
+        a.document.write('<tr>');
+        a.document.write('<td>');
         a.document.write(divContents);
-        a.document.write('</table>');
+        a.document.write('</td>');
+        a.document.write('</tr>');
         a.document.write('</body>');
         a.document.close();
         a.print();

@@ -9,14 +9,32 @@ class Depense extends Component
 {
     public $nomDepense;
     public $edit = 0;
+    public $etat="Depo";
+    public $modif=0;
     protected $listeners = [
-        'CategorieName'
-    ];
+        'CategorieName',
+        'matchDepense',
+        'hereYourData'    
+      ];
+    public function matchDepense($name)
+    {
+        $this->edit=$name[0];
+        $this->etat=$name[1];
+        // dd($this->nomDepense);
+    }
+    
+    public function hereYourData($data)
+    {
+        $this->modif=$data[0];
+        $this->nomDepense=Depenses::find($data[0])->nomDepense;
+    }
 
     public function CategorieName($one)
     {
-        $this->edit = $one;
-        $found = Depenses::find($this->edit);
+        dd("Gooooooood");
+        $this->edit = $one[0];
+        $this->etat=$one[1];
+        $found = Depenses::find($this->edit)->where("etat",$this->etat)->get();
         $this->nomDepense = $found->nomDepense;
     }
 
@@ -26,11 +44,12 @@ class Depense extends Component
             'nomDepense' => "required"
         ]);
         $data = [
-            'nomDepense' => $this->nomDepense
+            'nomDepense' => $this->nomDepense,
+            'etat'=> $this->etat
         ];
 
-        if ($this->edit) {
-            Depenses::find($this->edit)->update($data);
+        if ($this->modif) {
+            Depenses::find($this->modif)->update($data);
         } else {
             Depenses::create($data);
         }
