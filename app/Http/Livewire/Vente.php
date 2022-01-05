@@ -30,6 +30,8 @@ class Vente extends Component
     public $numeroChek;
     public $allPro = 0;
     public $reports;
+    public $etat;
+    public $reparation;
 
     public function afficherPro()
     {
@@ -59,6 +61,7 @@ class Vente extends Component
         $choosePro = Produit::find($this->produit);
         $this->prixunitaire = $choosePro->prixUnitaire;
         $this->maxQty = $choosePro->Quantite;
+        $this->reparation=Ventes::where("prodId",$this->produit)->where("etat",'reparation')->count();
         // dd($choosePro);
     }
     public function mount()
@@ -86,7 +89,7 @@ class Vente extends Component
             'totalMount' => "required|integer",
             'rabais' => "integer",
             'paymethod' => "string",
-            // 'numeroChek' => "string"
+            'etat' => "string"
         ]);
         $ventId = Ventes::create([
             'prodId' => $this->produit,
@@ -98,8 +101,10 @@ class Vente extends Component
             'userId' => Auth::user()->id,
             'numeroChek' => $this->numeroChek,
             'paymethod' => $this->paymethod,
-            'datePaie'=>$this->datePaie
+            'datePaie'=>$this->datePaie,
+            'etat'=>$this->etat
         ]);
+
         $res = Produit::find($this->produit)->Quantite - $this->qty;
         Produit::find($this->produit)->update(["Quantite" => $res]);
         return redirect(route("receipt-vente", $ventId));

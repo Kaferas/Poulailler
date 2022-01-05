@@ -67,30 +67,9 @@
         </div>
     </div>
     <div class="col-md-8 row mt-4">
-      <div  class="col-md-6   border-top-0 border-bottom-0 border border-secondary">
-          <table class="table">
-              <h4 class="text text-danger"><< Précedent</h4>
-            <thead>
-                <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Prix</th>
-                <th scope="col">Quantite</th>
-                <th scope="col">Date</th>
-                </tr>
-            </thead>
-            <tbody >
-                <tr class="text-center">
-                <td id="nomancien" ></td>
-                <td id="prixancien" ></td>
-                <td id="quantiteancien"></td>
-                <td id="dateancien" ></td>
-            </tr>
-            </tbody>
-        </table>
-      </div>
       <div class="col-md-6 border-top-0 border-bottom-0 border-left-0 border border-secondary">
           <table class="table">
-                 <h4 class="d-flex justify-content-end text text-success">Nouveau >></h4>
+                 <h4 class="d-flex justify-content-start text text-success">Stock Nouveau >></h4>
                  <thead>
                 <tr>
                 <th scope="col">Nom</th>
@@ -109,6 +88,27 @@
             </tbody>
         </table>
       </div>
+      <div  class="col-md-6   border-top-0 border-bottom-0 border border-secondary">
+          <table class="table">
+              <h4 class="text text-danger"><< Stock Précedent</h4>
+            <thead>
+                <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Quantite</th>
+                <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr class="text-center">
+                <td id="nomancien" ></td>
+                <td id="prixancien" ></td>
+                <td id="quantiteancien"></td>
+                <td id="dateancien" ></td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
     </div>
 </div>
 <script>
@@ -119,12 +119,14 @@
 
         document.getElementById("nomancien").innerHTML=data.nomProduit || "";
         document.getElementById("prixancien").innerHTML=data.prixUnitaire || "";
-        document.getElementById("quantiteancien").innerHTML=data.Quantite || "";
-        document.getElementById("dateancien").innerHTML=data.updated_at || "";
+        document.getElementById("quantiteancien").innerHTML= data.Quantite;
+        let trueDa=parseInt(new Date(data.created_at).getDate()+1) +" - "+ parseInt(new Date(data.created_at).getMonth()+1) +" - "+new Date(data.created_at).getFullYear()   
+        document.getElementById("dateancien").innerHTML=trueDa || "";
         
         document.getElementById("nomnouveau").innerHTML=data.nomProduit || "";
         document.getElementById("prixnouveau").innerHTML=newlydata.prixUnite || "";
         document.getElementById("quantitenouveau").innerHTML=newlydata.quantite || "";
-        document.getElementById("datenouveau").innerHTML=data.created_at || "";
+        let trueDate=parseInt(new Date(data.updated_at).getDate()+1) +" - "+ parseInt(new Date(data.updated_at).getMonth()+1) +" - "+new Date(data.updated_at).getFullYear()   
+        document.getElementById("datenouveau").innerHTML=trueDate;
     })
 </script>

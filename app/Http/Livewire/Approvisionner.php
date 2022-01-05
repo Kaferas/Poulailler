@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Produit;
 use App\Models\Categories;
 use App\Models\Devis;
+use App\Models\detail_devis;
 use App\Models\HistoryStock;
 
 class Approvisionner extends Component
@@ -21,20 +22,22 @@ class Approvisionner extends Component
     private $lastly;
     public $rubrique="fini";
 
-    public function mount(){
-    $this->produits=Produit::all();   
-    $this->categories=Categories::all();
-    // {dd(json_decode(HistoryStock::latest()->first()->restJson));
-        // dd($this->produits);
+    public function mount()
+    {
+        $this->produits=Produit::all();   
+        $this->categories=Categories::all();
     }
+
     public function getLast()
     {
         return $this->lastly;
     }
+
     public function getnewly()
     {
         return $this->history;
     }
+
     public function triggerHistory()
     {
         if($this->rubrique == "premiere")
@@ -46,9 +49,8 @@ class Approvisionner extends Component
             $this->dispatchBrowserEvent("whaoou",[$this->getLast(),$this->getnewly()]);
         }
         if($this->rubrique == "fini"){
-            
-            $this->history=Devis::find($this->produit);   
-            
+    
+            $this->price=detail_devis::where('devisId',$this->produit)->sum("montantMateriel");
         }
     }
     public function trigger()
@@ -82,7 +84,7 @@ class Approvisionner extends Component
                 'restJson'=>json_encode($restant)
             ]);
             $restant->update([
-                'Quantite'=>$this->qty,
+                'Quantite'=>$this->qty + $restant->Quantite,
                 'prixUnitaire'=>$this->price,
                 'catId'=>$this->categorie
             ]);
@@ -97,7 +99,7 @@ class Approvisionner extends Component
                 'restJson'=>json_encode($restant)
             ]);
             $restant->update([
-                    'quantite'=>$this->qty,
+                    'quantite'=>$this->qty + $restant->quantite,
                     'prixUnite'=>$this->price,
                     'catId'=>$this->categorie
                 ]);

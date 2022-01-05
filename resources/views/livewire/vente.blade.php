@@ -28,18 +28,35 @@
                 @enderror
             </div>
            </div>
+           <div class="row d-flex justify-content-around">
+                <div class="form-group">
+                    <label for="" class="text text-primary">Vendre:</label>
+                    <input type="radio" name="etat" id="" value="vendu"  wire:model="etat" checked>
+                </div>
+                <div class="form-group">
+                    <label for="" class="text text-primary">Reparation</label>
+                    <input type="radio" name="etat" id=""  value="reparation" wire:model="etat">
+                </div>
+                @error('etat')
+                    <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>
+                    @enderror
+            </div>
             <div class="row">
-                <div class="form-group pl-3 col-md-4 mt-4">
+                <div class="form-group pl-3 col-md-4 ">
+                    <label for="">Quantite: </label>
                     <input type="number" name="" id="" class="form-control border border-dark" wire:model="qty" wire:change="calcultotal" max="{{$maxQty}}">
-                    <label for="">Quantite: <ul class="text text-danger">
-                        <li>En Stock: {{$maxQty}}</li>
-                        <li>En Reparation : {{$maxQty}}</li>
-                    </ul></label>
+                    <label for="">
+                        <ul class="text text-danger">
+                            <li>En Stock: {{$maxQty}}</li>
+                            <li>En Reparation : {{$reparation}}</li>
+                    </ul>
+                </label>
                     @error('qty')
                     <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="form-group col-md-4">
+               @if($etat != "reparation")
+               <div class="form-group col-md-4">
                     <label for="">Montant Total:</label>
                     <input type="number" name="" id="" class="form-control  border border-dark" wire:model="totalMount">
                     @error('totalMount')
@@ -50,7 +67,9 @@
                     <label for="">Rabais:</label>
                     <input type="number" name="" id="" class="form-control  border border-dark" wire:model="rabais" wire:change="recalcule">
                 </div>
+               @endif
             </div>
+         
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="">Client:</label>

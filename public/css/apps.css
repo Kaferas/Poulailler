@@ -18,7 +18,7 @@ body {
     /* overflow-y: hidden; */
 }
 .main {
-    height: 500px;
+    height: 600px;
     width: 100%;
     overflow: auto;
     /* background-color: darkmagenta; */
@@ -30,7 +30,7 @@ body {
     height: 60px;
     /* background-color: blueviolet; */
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-center;
     align-items: center;
     color: white;
 }

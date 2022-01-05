@@ -9,7 +9,9 @@
 
         @endif
         <li class="text-center"><a href="" class="text-white col-md-4 " wire:model="report"  wire:click.prevent="vreport">Rapports</a></li>
-        <li class="text-center"><a href="" class="text-white col-md-4 " wire:model="approvision"  wire:click.prevent="vappro">Approvisionner</a></li>
+        @if (Gate::allows("is-admin") || Gate::allows("is-caissier"))
+                <li class="text-center"><a href="" class="text-white col-md-4 " wire:model="approvision"  wire:click.prevent="vappro">Approvisionner</a></li>
+        @endif
     </div>
     @if (Gate::allows("is-caissier") || Gate::allows("is-admin"))
     @if($aproduit)
@@ -72,7 +74,7 @@
                        <div class="alert alert-danger mt-2">{{ $message }}</div>
                   @enderror
                    </div>
-                
+
                </div>
                <div class="row">
                    <button type="submit" class="btn btn-warning p-2">Editer</button>
@@ -84,7 +86,7 @@
        @if($categorie)
            @livewire("categorie")
        @endif
- 
+
        @if($afficherPro)
          <div class="col-md-6">
            <h2 class="mb-4">Produit Disponibles</h2>
@@ -181,7 +183,7 @@
                   @enderror
                    </div>
                   <div class="row">
-               
+
                   </div>
                </div>
                <div class="row">
@@ -194,7 +196,7 @@
        @if($categorie)
            @livewire("categorie")
        @endif
-     
+
        @if($afficherPro)
          <div class="col-md-6">
            <h2 class="mb-4">Produit Disponibles</h2>
@@ -249,7 +251,7 @@
                 <div class="form-group">
                     <label for="" class="text text-primary ">Du</label>
                     <input type="date" name="" id="" wire:model="from" class="form-control" >
-                    
+
                 </div>
                 <div class="form-group">
                     <label for="" class="text text-primary ">Au</label>
@@ -292,7 +294,9 @@
             </table>
         </div>
         @endif
-    @if($approvision)    
-        @livewire("approvisionner")
+    @if($approvision)
+       @if (Gate::allows("is-admin") || Gate::allows("is-caissier"))
+       @livewire("approvisionner")
+       @endif
     @endif
 </div>

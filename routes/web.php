@@ -8,6 +8,7 @@ use App\Http\Controllers\AcceuilController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\FabricationController;
+use App\Http\Controllers\ImpressionController;
 use App\Models\Fabrication;
 use App\Models\Ventes;
 
@@ -33,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get("suivis", [SuivisController::class, 'index'])->name("suivis");
 
     Route::get("fabrication", [FabricationController::class, 'index'])->name("fabrication");
+    
+    Route::get("impression", [ImpressionController::class, 'index'])->name("impression");
 
     Route::get("fabrication/{id}", [FabricationController::class, 'details'])->name("detailsDevis");
 
