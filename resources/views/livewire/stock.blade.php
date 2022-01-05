@@ -1,5 +1,5 @@
 <div>
-    <div class="bg-dark d-flex justify-content-around list-unstyled align-items-end col-md-6 ml-5 p-1">
+    <div class="bg-dark d-flex justify-content-around list-unstyled align-items-end col-md-8 ml-5 p-1">
         @if(Gate::allows("is-admin") ||  Gate::allows("is-caissier"))
         <li><a  class="text-white col-md-4 text-center" href="" wire:model="o" wire:click.prevent="ajPro">Ajout Produit</a></li>
         @endif
@@ -8,7 +8,8 @@
             <li class="text-center"><a href="" class="text-white col-md-4 " wire:model="vproduit" wire:click.prevent="vfabrication">Vente Fabrication</a></li>
 
         @endif
-        <li class="text-center"><a href="" class="text-white col-md-4 " wire:model="report" wire:click.prevent="vreport">Rapports</a></li>
+        <li class="text-center"><a href="" class="text-white col-md-4 " wire:model="report"  wire:click.prevent="vreport">Rapports</a></li>
+        <li class="text-center"><a href="" class="text-white col-md-4 " wire:model="approvision"  wire:click.prevent="vappro">Approvisionner</a></li>
     </div>
     @if (Gate::allows("is-caissier") || Gate::allows("is-admin"))
     @if($aproduit)
@@ -71,23 +72,7 @@
                        <div class="alert alert-danger mt-2">{{ $message }}</div>
                   @enderror
                    </div>
-                  <div class="row">
-                   <div class="form-group ml-3">
-                       <label for="">Fournisseur:</label>
-                       <select name="" id="" class="form-control col-md-12" wire:model="fournisseursId">
-                           <option value="">Choose Founisseur</option>
-                           @foreach ($fournisseurs as $fourni)
-                               <option value="{{$fourni->id}}">{{$fourni->name}}&nbsp{{ $fourni->prenom}}</option>
-                           @endforeach
-                       </select>
-
-                   </div>
-                 @if (Gate::denies("is-simple"))
-                 <div class="form-group  ml-1">
-                  <div class="btn btn-success p-1 " data-toggle="modal" data-target="#exampleModal" wire:click="displaymodalF">+</div>
-              </div>
-                 @endif
-                  </div>
+                
                </div>
                <div class="row">
                    <button type="submit" class="btn btn-warning p-2">Editer</button>
@@ -99,9 +84,7 @@
        @if($categorie)
            @livewire("categorie")
        @endif
-       @if($fournisseur)
-           @livewire("fournisseur")
-       @endif
+ 
        @if($afficherPro)
          <div class="col-md-6">
            <h2 class="mb-4">Produit Disponibles</h2>
@@ -109,7 +92,7 @@
            <table class="table">
                <thead>
                  <tr>
-                   <th scope="row">CodeProduit</th>
+                   <td>CodeProduit</td>
                    <td>Nom</td>
                    <td>PrixUnitaire</td>
                    <td>Quantite Restant</td>
@@ -198,21 +181,7 @@
                   @enderror
                    </div>
                   <div class="row">
-                   <div class="form-group ml-3">
-                       <label for="">Fournisseur:</label>
-                       <select name="" id="" class="form-control col-md-12" wire:model="fournisseursId">
-                           <option value="">Choose Founisseur</option>
-                           @foreach ($fournisseurs as $fourni)
-                               <option value="{{$fourni->id}}">{{$fourni->name}}&nbsp{{ $fourni->prenom}}</option>
-                           @endforeach
-                       </select>
-
-                   </div>
-                   @if (Gate::allows("is-caissier"))
-                   <div class="form-group  ml-1">
-                    <div class="btn btn-success p-1 " data-toggle="modal" data-target="#exampleModal" wire:click="displaymodalF">+</div>
-                </div>
-                @endif
+               
                   </div>
                </div>
                <div class="row">
@@ -225,9 +194,7 @@
        @if($categorie)
            @livewire("categorie")
        @endif
-       @if($fournisseur)
-           @livewire("fournisseur")
-       @endif
+     
        @if($afficherPro)
          <div class="col-md-6">
            <h2 class="mb-4">Produit Disponibles</h2>
@@ -281,47 +248,51 @@
                 </div>
                 <div class="form-group">
                     <label for="" class="text text-primary ">Du</label>
-                    <input type="date" name="" id="" wire:model="from" class="form-control">
-
+                    <input type="date" name="" id="" wire:model="from" class="form-control" >
+                    
                 </div>
                 <div class="form-group">
                     <label for="" class="text text-primary ">Au</label>
                     <input type="date" name="" id="" wire:model="to" class="form-control">
                 </div>
             </div>
-            <table class="table" id="vente">
+            <table class="table table-striped" id="vente">
                 <thead class="thead-light">
-                  <tr class="text text-center">
-                    <th scope="col">#</th>
-                    <th scope="col">Produit</th>
-                    <th scope="col">Quantite</th>
-                    <th scope="col">Montant</th>
-                    <th scope="col">Rabais</th>
-                    <th scope="col">Client</th>
-                    <th scope="col">Total</th>
-                  </tr>
+                    <tr class="text text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Produit</th>
+                        <th scope="col">Quantite</th>
+                        <th scope="col">Montant</th>
+                        <th scope="col">Rabais</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Total</th>
+                    </tr>
                 </thead>
                 <tbody >
-                @foreach ($stocks as $stock)
-                <tr class="text text-center">
-                    <th scope="row">{{$loop->index+1}}</th>
-                    <td>{{$stock->produits->nomProduit}}</td>
-                    <td>{{$stock->qty}}</td>
-                    <td>{{$stock->montantUnit}}</td>
-                    <td>{{$stock->rabais}}</td>
-                    <td>{{$stock->clients->nomClient}}&nbsp;{{$stock->clients->prenomClient}}</td>
-                    <td>{{$stock->totalAmount}}FBU</td>
-                  </tr>
-                @endforeach
-                <tr>
-                    <h2 class="text-center m-2 text text-primary">Total : {{$stocks->sum('totalAmount')}}FBU</h2>
-                </tr>
+                    @foreach ($stocks as $stock)
+                    <tr class="text text-center">
+                        <th scope="row">{{$loop->index+1}}</th>
+                        <td>{{$stock->produits->nomProduit}}</td>
+                        <td>{{$stock->qty}}</td>
+                        <td>{{$stock->montantUnit}}</td>
+                        <td>{{$stock->rabais}}</td>
+                        <td>{{$stock->clients->nomClient ?? "Client"}}&nbsp;{{$stock->clients->prenomClient ?? $loop->index+1}}</td>
+                        <td>{{$stock->totalAmount}}FBU</td>
+                    </tr>
+                    @endforeach
+                    <tr>
+                        <h2 class="text-center m-2 text text-primary">Total : {{$stocks->sum('totalAmount')}}FBU</h2>
+                    </tr>
                 </tbody>
-
-                <div class="form-group m-1">
-                    <button class="btn btn-primary p-1 m-1" onclick="printDivs('vente')">Print</button>
+                <div class="mt-4 form-group m-1 d-flex justify-content-between">
+                    {{$stocks->links()}}
+                    <h5>Rapport du {{date('d-m-Y',strtotime($from))}} au {{date('d-m-Y',strtotime($to))}}</h5>
+                    <button class="btn btn-primary p-1 m-1" onclick="printDivs('vente')">🖨 Print</button>
                 </div>
             </table>
         </div>
+        @endif
+    @if($approvision)    
+        @livewire("approvisionner")
     @endif
 </div>

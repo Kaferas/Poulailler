@@ -47,6 +47,11 @@
 
                 <p class="identifier">
                     <span id="bold">Residant a:</span>
+                    @if($id->ClientId)
+                    <span>{{$id->clients->adressClient}}</span>
+                    @else
+                    <span></span>
+                    @endif
                 </p>
                 <p class="identifier">
                     <span id="bold">Payment :</span>

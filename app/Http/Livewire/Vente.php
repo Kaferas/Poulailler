@@ -25,19 +25,20 @@ class Vente extends Component
     public $client = null;
     public $clients;
     public $clientslist;
+    public $datePaie;
     public $paymethod;
     public $numeroChek;
     public $allPro = 0;
-    public $reports = [];
+    public $reports;
 
     public function afficherPro()
     {
         $this->allPro = 1;
         $this->client = 0;
         // $this->reports = Ventes::orderBy('id', "DESC")->get();
-        $reports = Ventes::paginate(5);
-        $links = $reports->links();
-        $this->reports = collect($reports->items());
+        // $reports = Ventes::paginate(7);
+        // $links = $reports->links();
+        // $this->reports = collect($reports->items());
     }
     public function addClient()
     {
@@ -51,7 +52,7 @@ class Vente extends Component
 
     public function recalcule()
     {
-        $this->totalMount = $this->totalMount - (($this->rabais * $this->prixunitaire) / 100 * $this->qty);
+        $this->totalMount = $this->totalMount - $this->rabais ;
     }
     public function triggerProduct()
     {
@@ -64,6 +65,7 @@ class Vente extends Component
     {
         $this->produits = Produit::all();
         $this->clients = Clients::where('etat', 1)->get();
+        $this->reports = Ventes::all();
     }
 
     public function modVente($venteid)
@@ -83,8 +85,7 @@ class Vente extends Component
             'qty' => "required|integer",
             'totalMount' => "required|integer",
             'rabais' => "integer",
-            'clientslist' => "required|integer",
-            'paymethod' => "required|string",
+            'paymethod' => "string",
             // 'numeroChek' => "string"
         ]);
         $ventId = Ventes::create([
@@ -96,7 +97,8 @@ class Vente extends Component
             'ClientId' => $this->clientslist,
             'userId' => Auth::user()->id,
             'numeroChek' => $this->numeroChek,
-            'paymethod' => $this->paymethod
+            'paymethod' => $this->paymethod,
+            'datePaie'=>$this->datePaie
         ]);
         $res = Produit::find($this->produit)->Quantite - $this->qty;
         Produit::find($this->produit)->update(["Quantite" => $res]);
@@ -104,8 +106,6 @@ class Vente extends Component
     }
     public function render()
     {
-        return view('livewire.vente', [
-            'reports' => $this->reports
-        ]);
+        return view('livewire.vente');
     }
 }

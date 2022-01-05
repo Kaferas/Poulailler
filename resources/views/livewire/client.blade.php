@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="row col-md-10 mb-2">
-                                <label for="" class="text text-danger">Carte Identite Nationale:</label>
+                        <span for="" class="col-4">CNI/NIF:</span>
                                 <input type="text" name="" id="" class="form-control col-md-10 p-2 border border-dark" wire:model="cniClient">
                                 @error('cniClient')
                                 <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="row col-md-10 mb-2">
-                            <label for="">Carte Identite Nationale:</label>
+                    <span for="" class="col-4">CNI/NIF:</span>
                             <input type="text" name="" id="" class="form-control col-md-10 p-2 border border-dark" wire:model="cniClient">
                             @error('cniClient')
                             <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>

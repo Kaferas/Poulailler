@@ -21,7 +21,7 @@ class CreateVentesTable extends Migration
             $table->double("totalAmount");
             $table->integer("rabais")->nullable();
             $table->integer("userId");
-            $table->integer("ClientId");
+            $table->integer("ClientId")->nullable();
             $table->string("numeroChek")->nullable();
             $table->string("paymethod");
             $table->timestamps();

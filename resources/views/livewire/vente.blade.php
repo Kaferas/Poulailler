@@ -29,9 +29,12 @@
             </div>
            </div>
             <div class="row">
-                <div class="form-group pl-3 col-md-4">
-                    <label for="">Quantite:</label>
+                <div class="form-group pl-3 col-md-4 mt-4">
                     <input type="number" name="" id="" class="form-control border border-dark" wire:model="qty" wire:change="calcultotal" max="{{$maxQty}}">
+                    <label for="">Quantite: <ul class="text text-danger">
+                        <li>En Stock: {{$maxQty}}</li>
+                        <li>En Reparation : {{$maxQty}}</li>
+                    </ul></label>
                     @error('qty')
                     <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>
                     @enderror
@@ -44,7 +47,7 @@
                     @enderror
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="">Rabais (%)</label>
+                    <label for="">Rabais:</label>
                     <input type="number" name="" id="" class="form-control  border border-dark" wire:model="rabais" wire:change="recalcule">
                 </div>
             </div>
@@ -76,8 +79,13 @@
                    @if ($paymethod == "Cheque")
                    <input type="text" name="" id="" class="form-control border-primary" placeholder="Numero du cheque" wire:model="numeroChek" value="0">
                    @error($numeroChek)
-                        <div class="alert alert-danger">{{$message}}</div>
+                   <div class="alert alert-danger">{{$message}}</div>
                    @enderror
+                   @elseif($paymethod == "Credit")
+                   <div class="row">
+                   <span class="text text-primary">Date de Paiement: </span>
+                   <input type="date" name="" id="" class="form-control border-primary" placeholder="Numero du cheque" wire:model="datePaie" value="0">
+                   </div>
                   @endif
                 </div>
 
@@ -95,7 +103,7 @@
         @livewire("client")
     @endif
     @if($allPro)
-       <div class="col-md-6">
+       <div class="col-md-6 mt-3">
         <h2 class="text text-primary">Derniers Ventes</h2>
         <table class="table table-striped">
             <thead>
@@ -103,21 +111,25 @@
                 <th scope="col">Produit</th>
                 <th scope="col">Quantite</th>
                 <th scope="col">Client</th>
+                <th scope="col">Mode</th>
+                <th scope="col">Commission</th>
                 {{-- <th scope="col">Action</th> --}}
               </tr>
             </thead>
             <tbody>
+                
             @foreach ($reports as $report)
             <tr>
              <th scope="row">{{$report->produits->nomProduit}}</th>
              <td>{{$report->qty}}</td>
-             <td>{{$report->clients->nomClient}}</td>
+             <td>{{$report->clients->nomClient ?? "" }} </td>
+             <td>{{$report->paymethod}}</td>
+             <td>{{$report->rabais}}</td>
              {{-- <td><a href="" class="btn btn-primary"  wire:click.prevent="modVente({{$report->id}})">Modifier</a></td> --}}
            </tr>
              @endforeach
             </tbody>
         </table>
-        {{-- {$links}} --}}
        </div>
     @endif
 </div>

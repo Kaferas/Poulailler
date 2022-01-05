@@ -18,6 +18,7 @@ class Stock extends Component
     public $edition = null;
     public $vfabr;
     public $aproduit = 1;
+    public $approvision = 0;
     public $vproduit = 0;
     public $categorie;
     public $report = 0;
@@ -30,16 +31,13 @@ class Stock extends Component
     public $qty;
     public $from;
     public $to;
-    public $fournisseur;
-    public $fournisseursId;
-    public $fournisseurs;
+    // public $fournisseurs;
     public $afficherPro = null;
 
     public function affProduit()
     {
         $this->afficherPro = 1;
         $this->edition = null;
-        $this->fournisseur = null;
         $this->categorie = null;
     }
 
@@ -53,7 +51,6 @@ class Stock extends Component
         $this->nomPro = $editable->nomProduit;
         $this->priUnit = $editable->prixUnitaire;
         $this->categorieid = $editable->catId;
-        $this->fournisseursId = $editable->FournisseurId;
         $this->qty = $editable->Quantite;
     }
     public function mount()
@@ -63,17 +60,26 @@ class Stock extends Component
             $this->codePro = rand(4899439, 99089438954);
         } while (in_array($this->codePro, $this->produits));
         $this->categories = Categories::all();
-        $this->fournisseurs = Fournisseurs::all();
+    }
+    public function vappro()
+    {
+        $this->report = 0;
+        $this->vfabr = 0;
+        $this->aproduit = 0;
+        $this->vproduit = 0;
+        $this->approvision=1;
     }
     public function vfabrication()
     {
         $this->report = 0;
+        $this->approvision=0;
         $this->vfabr = 1;
         $this->aproduit = 0;
         $this->vproduit = 0;
     }
     public function ajPro()
     {
+        $this->approvision=0;
         $this->aproduit = 1;
         $this->vfabr = 0;
         $this->vproduit = 0;
@@ -81,6 +87,7 @@ class Stock extends Component
     }
     public function changePro()
     {
+        $this->approvision=0;
         $this->aproduit = 0;
         $this->vfabr = 0;
         $this->vproduit = 1;
@@ -88,6 +95,7 @@ class Stock extends Component
     }
     public function vreport()
     {
+        $this->approvision=0;
         $this->aproduit = 0;
         $this->vfabr = 0;
         $this->vproduit = 0;
@@ -97,12 +105,11 @@ class Stock extends Component
     {
         $this->categorie = 2;
         $this->afficherPro = null;
-        $this->fournisseur = null;
     }
     public function displaymodalF()
     {
         $this->afficherPro = null;
-        $this->fournisseur = 2;
+
         $this->categorie = null;
     }
     public function resetFields()
@@ -111,7 +118,6 @@ class Stock extends Component
         $this->nomPro = null;
         $this->priUnit = null;
         $this->categorieid = null;
-        $this->fournisseursId = null;
         $this->qty = null;
     }
 
@@ -123,14 +129,12 @@ class Stock extends Component
             'priUnit' => "required|integer",
             'categorieid' => "required|integer",
             "qty" => "required|integer",
-            "fournisseursId" => "required|integer",
         ]);
         $data = [
             'codeProduit' => $this->codePro,
             'nomProduit' => $this->nomPro,
             'prixUnitaire' => $this->priUnit,
             'catId' => $this->categorieid,
-            'FournisseurId' => $this->fournisseursId,
             'Quantite' => $this->qty
         ];
         if ($this->edition) {
@@ -151,14 +155,14 @@ class Stock extends Component
                 } else {
                     $query = Produit::all();
                 }
-            })->paginate(4),
+            })->orderBy("id",'desc')->paginate(4),
             'stocks' => Ventes::where(function ($query) {
                 if ($this->from != "" && $this->to != "") {
                     $query->whereBetween('created_at', [$this->from, $this->to]);
                 } else {
                     $query = Ventes::all();
                 }
-            })->paginate(20)
+            })->orderBy("id",'desc')->paginate(10)
         ]);
     }
 }
