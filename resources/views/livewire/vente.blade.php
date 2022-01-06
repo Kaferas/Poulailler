@@ -31,8 +31,14 @@
            <div class="row d-flex justify-content-around">
                 <div class="form-group">
                     <label for="" class="text text-primary">Vendre:</label>
-                    <input type="radio" name="etat" id="" value="vendu"  wire:model="etat" checked>
+                    <input type="radio" name="etat" id="" value="vendu"  wire:model="etat" >
                 </div>
+                @if($etat == 'reparation' || $etat == 'stock')
+                    <div class="form-group">
+                        <label for="" class="text text-primary">Retour En Stock</label>
+                        <input type="radio" name="etat" id=""  value="stock" wire:model="etat">
+                    </div>            
+                @endif
                 <div class="form-group">
                     <label for="" class="text text-primary">Reparation</label>
                     <input type="radio" name="etat" id=""  value="reparation" wire:model="etat">
@@ -48,7 +54,7 @@
                     <label for="">
                         <ul class="text text-danger">
                             <li>En Stock: {{$maxQty}}</li>
-                            <li>En Reparation : {{$reparation}}</li>
+                            <li>Reparation : {{$reparation}}</li>
                     </ul>
                 </label>
                     @error('qty')
@@ -124,6 +130,12 @@
     @if($allPro)
        <div class="col-md-6 mt-3">
         <h2 class="text text-primary">Derniers Ventes</h2>
+        <select name="" id="" class="form-control" wire:model="prod" wire:change="selectPro">
+            <option value="">Chercher Produit</option>
+            @foreach ($prods as $pro)
+                <option value="{{$pro->id}}">{{$pro->nomProduit}}</option>
+            @endforeach
+        </select>
         <table class="table table-striped">
             <thead>
               <tr>
@@ -132,7 +144,7 @@
                 <th scope="col">Client</th>
                 <th scope="col">Mode</th>
                 <th scope="col">Commission</th>
-                {{-- <th scope="col">Action</th> --}}
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -144,7 +156,7 @@
              <td>{{$report->clients->nomClient ?? "" }} </td>
              <td>{{$report->paymethod}}</td>
              <td>{{$report->rabais}}</td>
-             {{-- <td><a href="" class="btn btn-primary"  wire:click.prevent="modVente({{$report->id}})">Modifier</a></td> --}}
+             <td><a href="" class="btn btn-primary"  wire:click.prevent="modVente({{$report->id}})">Modifier</a></td>
            </tr>
              @endforeach
             </tbody>

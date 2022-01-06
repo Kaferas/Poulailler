@@ -21,7 +21,7 @@ class Vente extends Component
     public $venteid = 0;
     public $totalMount;
     public $rabais = 0;
-    public $maxQty = 1;
+    public $maxQty = null;
     public $client = null;
     public $clients;
     public $clientslist;
@@ -32,6 +32,9 @@ class Vente extends Component
     public $reports;
     public $etat;
     public $reparation;
+    public $prods;
+    public $prod = 1;
+    public $search;
 
     public function afficherPro()
     {
@@ -54,30 +57,41 @@ class Vente extends Component
 
     public function recalcule()
     {
-        $this->totalMount = $this->totalMount - $this->rabais ;
+        $this->totalMount = $this->totalMount - $this->rabais;
     }
     public function triggerProduct()
     {
         $choosePro = Produit::find($this->produit);
         $this->prixunitaire = $choosePro->prixUnitaire;
         $this->maxQty = $choosePro->Quantite;
-        $this->reparation=Ventes::where("prodId",$this->produit)->where("etat",'reparation')->count();
+        $this->reparation = Ventes::where("prodId", $this->produit)->where("etat", 'reparation')->sum("qty");
         // dd($choosePro);
     }
     public function mount()
     {
         $this->produits = Produit::all();
+        $this->prods = Produit::all();
         $this->clients = Clients::where('etat', 1)->get();
-        $this->reports = Ventes::all();
+        $this->reports = Ventes::where("ProdId", $this->prod)->orderBy("id", "DESC")->get();
+    }
+
+    public function selectPro()
+    {
+        $this->search = $this->prod;
+        $this->mount();
     }
 
     public function modVente($venteid)
     {
-        // dd($this->produits);
-        // $this->venteid = $venteid;
-        // $found = Ventes::find($this->venteid);
-        // $this->produit = $found->prodId;
-        // $this->prixunitaire = $found->montantUnit;
+        $this->venteid = $venteid;
+        $found = Ventes::find($this->venteid);
+        $this->produit = $found->prodId;
+        $this->prixunitaire = $found->montantUnit;
+        $this->qty = $found->qty;
+        $this->totalMount = $found->totalAmount;
+        $this->rabais = $found->rabais;
+        // $this->client = $found->ClientId;
+        $this->etat = $found->etat;
     }
 
     public function save()
@@ -91,6 +105,16 @@ class Vente extends Component
             'paymethod' => "string",
             'etat' => "string"
         ]);
+        if ($this->venteid) {
+            if ($this->etat == 'stock') {
+                $quantite = Ventes::find($this->venteid);
+                $retour = Produit::find($quantite->prodId);
+                $newval = $retour->Quantite + $quantite->qty;
+                $retour->update(['Quantite' => $newval]);
+                $quantite->delete();
+                return redirect(route("stocks"));
+            }
+        }
         $ventId = Ventes::create([
             'prodId' => $this->produit,
             'montantUnit' => $this->prixunitaire,
@@ -101,8 +125,8 @@ class Vente extends Component
             'userId' => Auth::user()->id,
             'numeroChek' => $this->numeroChek,
             'paymethod' => $this->paymethod,
-            'datePaie'=>$this->datePaie,
-            'etat'=>$this->etat
+            'datePaie' => $this->datePaie,
+            'etat' => $this->etat
         ]);
 
         $res = Produit::find($this->produit)->Quantite - $this->qty;

@@ -20,8 +20,13 @@ class VenteFabrication extends Component
     public $client;
     public $modForm = 0;
     public $limit;
+    public $reparation;
     public $dernier = 0;
     public $qty;
+    public $etat;
+    public $fab;
+
+    protected $paginationTheme = "bootstrap";
 
     public function mount()
     {
@@ -34,6 +39,7 @@ class VenteFabrication extends Component
         $pro = detail_devis::where('devisId', $this->produit);
         $this->fabPrix = $pro->sum("montantMateriel");
         $this->limit = Devis::find($this->produit)->quantite;
+        $this->reparation = Fabrication::where("produitId", $this->produit)->where("etat", 'reparation')->count();
     }
     public function afficherDernier()
     {
@@ -55,7 +61,8 @@ class VenteFabrication extends Component
             'qty' => "required|integer",
             'produit' => "required|integer",
             'fabPrix' => "required|integer",
-            'fabVente' => "required|integer"
+            'fabVente' => "required|integer",
+            'etat' => "required"
         ]);
         $data = [
             'produitId' => $this->produit,
@@ -63,15 +70,19 @@ class VenteFabrication extends Component
             'prixvente' => $this->fabVente,
             'quantite' => $this->qty,
             'clientId' => $this->client,
+            'etat' => $this->etat
         ];
         if ($this->current) {
+            // dd($this->current);
             Fabrication::find($this->current)->update($data);
+            return redirect(route("stocks"));
         } else {
-            $fab = Fabrication::create($data);
+            $this->fab = Fabrication::create($data);
+            $res = Devis::find($this->produit)->quantite - $this->qty;
+            Devis::find($this->produit)->update(['quantite' => $res]);
+            return redirect(route("receipt", $this->fab->id));
         }
-        $res = Devis::find($this->produit)->quantite - $this->qty;
-        Devis::find($this->produit)->update(['quantite' => $res]);
-        return redirect(route("receipt", $fab->id));
+
         // Session::flash('message', "Vente bien Faite");
         // $this->resetField();
     }
@@ -85,11 +96,12 @@ class VenteFabrication extends Component
         $this->fabVente = $found->prixvente;
         $this->qty = $found->quantite;
         $this->client = $found->clientId ?? null;
+        $this->etat = $found->etat;
     }
     public function render()
     {
         return view('livewire.vente-fabrication', [
-            'all' => Fabrication::paginate(5)
+            'all' => Fabrication::orderBy("id", "DESC")->paginate(5)
         ]);
     }
 }

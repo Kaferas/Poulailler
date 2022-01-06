@@ -15,13 +15,14 @@
             <div class="col-md-3">
                 <label for="">Achete par:</label>
                     <select name="" id="" class="form-control" wire:model="client">
+                        <option value=""></option>
                         @foreach ($clients as $cli)
                         <option value="{{$cli->id}}">{{$cli->nomClient}}&nbsp;{{$cli->prenomClient}}</option>
                         @endforeach
                     </select>
                 </div>
             @endif
-            @if ($client && $table == "ventes" || $table == "depenses")
+            @if ( $table == "ventes" || $table == "depenses")
                 <div class="col-md-6 row">
                     <div class="form-group">
                         <label for="">Du</label>
@@ -103,18 +104,18 @@
 
                 <table class="table" id="doc">
                     <thead>
-                        <tr class="text-center">
-                    <th scope="col">#</th>
-                    <th scope="col">Libelle</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Date</th>
-                  </tr>
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Libelle</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Date</th>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $depense)
                     <tr class="text-center">
-                        <th scope="row">{{$loop->index+1}}</th>
-                        <th scope="row">{{$depense->nomDepense}}</th>
+                        <td>{{$loop->index+1}}</td>
+                        <td>{{$depense->nomDepense}}</td>
                         <td>{{$depense->etat}}</td>
                         <td>{{date("Y-m-d",strtotime($depense->created_at))}}</td>
                     </tr>

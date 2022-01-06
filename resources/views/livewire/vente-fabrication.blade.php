@@ -24,6 +24,23 @@
                     <div class="alert alert-danger">{{$message}}</div>
                 @enderror
             </div>
+            <div class="row d-flex justify-content-around">
+                <div class="form-group">
+                    <label for="" class="text text-primary">Vendre:</label>
+                    <input type="radio" name="etat" id="" value="vendu"  wire:model="etat" @if ($etat == "vendu")
+                        checked
+                    @endif>
+                </div>
+                <div class="form-group">
+                    <label for="" class="text text-primary">Reparation</label>
+                    <input type="radio" name="etat" id=""  value="reparation" wire:model="etat" @if ($etat == "reparation")
+                    checked
+                @endif>
+                </div>
+                @error('etat')
+                    <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>
+                @enderror
+            </div>
             <div class="container row">
                 <div class="form-group">
                     <label for="" class="text text-danger">Prix Fabrication:</label>
@@ -44,7 +61,16 @@
             <div class="ml-1 row">
                 <div class="form-group ">
                     <label for="" class="text text-danger">Quantite:</label>
-                    <label for="" class="text text-danger">En Stock {{$limit}}:</label>
+                    <label for="" class="text text-danger">
+                       <ul>
+                           <li>
+                               En Stock {{$limit}}:
+                           </li>
+                           <li>
+                               En Reparation {{$reparation}}
+                           </li>
+                       </ul>
+                    </label>
                     <input type="tex" name="quantite" id="" class="form-control" wire:model="qty" min="0" max={{$limit}} placeholder="Quantite Voulue">
                     @error('qty')
                     <div class="alert alert-danger">{{$message}}</div>
@@ -87,6 +113,19 @@
                     <div class="alert alert-danger">{{$message}}</div>
                 @enderror
             </div>
+            <div class="row d-flex justify-content-around">
+                <div class="form-group">
+                    <label for="" class="text text-primary">Vendre:</label>
+                    <input type="radio" name="etat" id="" value="vendu"  wire:model="etat">
+                </div>
+                <div class="form-group">
+                    <label for="" class="text text-primary">Reparation</label>
+                    <input type="radio" name="etat" id=""  value="reparation" wire:model="etat">
+                </div>
+                @error('etat')
+                    <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>
+                    @enderror
+            </div>
             <div class="container row">
                 <div class="form-group">
                     <label for="">Prix Fabrication:</label>
@@ -107,8 +146,17 @@
             <div class="ml-1 row">
                 <div class="form-group ">
                     <label for="">Quantite:</label>
-                    <label for="" class="text text-danger">En Stock {{$limit}}:</label>
                     <input type="tex" name="quantite" id="" class="form-control" wire:model="qty" min="0" max={{$limit}} placeholder="Quantite Voulue">
+                    <label for="" class="text text-danger">
+                        <ul>
+                            <li>
+                                En Stock: {{$limit}}
+                            </li>
+                            <li>
+                                En Reparation: {{$reparation}}
+                            </li>
+                        </ul>
+                    </label>
                     @error('qty')
                     <div class="alert alert-danger">{{$message}}</div>
                 @enderror
@@ -160,7 +208,7 @@
                  @endforeach
                 </tbody>
             </table>
-            {{-- {$links}} --}}
+        {{$all->links()}}
            </div>
         @endif
     </div>
