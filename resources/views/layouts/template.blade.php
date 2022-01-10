@@ -25,7 +25,7 @@
                 <li @if($now=="finance") class="active" @endif><a href="{{route('acceuil')}}">Finance</a></li>
                 <li  @if($now=="stocks") class="active" @endif><a href="{{route('stocks')}}">Stocks</a></li>
                 @if(Gate::allows("is-caissier") || Gate::allows("is-admin") )
-                <li  @if($now=="impression") class="active" @endif><a href="{{route('impression')}}">Documents</a></li>
+                    <li  @if($now=="impression") class="active" @endif><a href="{{route('impression')}}">Documents</a></li>
                 @endif
                 @if (!Gate::allows("is-caissier"))
                     <li  @if($now=="fabrication") class="active" @endif><a href="{{route('fabrication')}}">Fabrications</a></li>

@@ -268,6 +268,7 @@
                         <th scope="col">Rabais</th>
                         <th scope="col">Client</th>
                         <th scope="col">Total</th>
+                        <th scope="col">Date</th>
                     </tr>
                 </thead>
                 <tbody >
@@ -280,6 +281,7 @@
                         <td>{{$stock->rabais}}</td>
                         <td>{{$stock->clients->nomClient ?? "Client"}}&nbsp;{{$stock->clients->prenomClient ?? $loop->index+1}}</td>
                         <td>{{$stock->totalAmount}}FBU</td>
+                        <td>{{date('d-m-Y',strtotime($stock->created_at))}}</td>
                     </tr>
                     @endforeach
                     <tr>

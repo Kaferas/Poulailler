@@ -72,7 +72,7 @@ class Vente extends Component
         $this->produits = Produit::all();
         $this->prods = Produit::all();
         $this->clients = Clients::where('etat', 1)->get();
-        $this->reports = Ventes::where("ProdId", $this->prod)->orderBy("id", "DESC")->get();
+        $this->reports = Ventes::where("ProdId", $this->prod)->where("etat", '<>', 'stock')->orderBy("id", "DESC")->get();
     }
 
     public function selectPro()
@@ -106,32 +106,44 @@ class Vente extends Component
             'etat' => "string"
         ]);
         if ($this->venteid) {
-            if ($this->etat == 'stock') {
+            if ($this->etat == 'stock' || $this->etat == "reparation") {
                 $quantite = Ventes::find($this->venteid);
                 $retour = Produit::find($quantite->prodId);
-                $newval = $retour->Quantite + $quantite->qty;
+                $newval = $retour->Quantite +  $this->qty;
                 $retour->update(['Quantite' => $newval]);
-                $quantite->delete();
+                $current = ($quantite->qty - $this->qty);
+                $quantite->update(['qty' => $current]);
+                if ($quantite->qty >= 1) {
+                    $quantite->update(['etat' => "reparation"]);
+                } else {
+                    $quantite->update(['etat' => "stock"]);
+                }
                 return redirect(route("stocks"));
             }
-        }
-        $ventId = Ventes::create([
-            'prodId' => $this->produit,
-            'montantUnit' => $this->prixunitaire,
-            'qty' => $this->qty,
-            'totalAmount' => $this->totalMount,
-            'rabais' => $this->rabais,
-            'ClientId' => $this->clientslist,
-            'userId' => Auth::user()->id,
-            'numeroChek' => $this->numeroChek,
-            'paymethod' => $this->paymethod,
-            'datePaie' => $this->datePaie,
-            'etat' => $this->etat
-        ]);
+        } else {
 
-        $res = Produit::find($this->produit)->Quantite - $this->qty;
-        Produit::find($this->produit)->update(["Quantite" => $res]);
-        return redirect(route("receipt-vente", $ventId));
+            $ventId = Ventes::create([
+                'prodId' => $this->produit,
+                'montantUnit' => $this->prixunitaire,
+                'qty' => $this->qty,
+                'totalAmount' => $this->totalMount,
+                'rabais' => $this->rabais,
+                'ClientId' => $this->clientslist,
+                'userId' => Auth::user()->id,
+                'numeroChek' => $this->numeroChek,
+                'paymethod' => $this->paymethod,
+                'datePaie' => $this->datePaie,
+                'etat' => $this->etat
+            ]);
+
+            $res = Produit::find($this->produit)->Quantite - $this->qty;
+            Produit::find($this->produit)->update(["Quantite" => $res]);
+            if ($this->etat == "reparation") {
+                return redirect(route("stocks"));
+            } else {
+                return redirect(route("receipt-vente", $ventId));
+            }
+        }
     }
     public function render()
     {

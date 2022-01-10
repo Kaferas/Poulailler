@@ -8,9 +8,12 @@ use Livewire\Component;
 use App\Models\Fabrication;
 use App\Models\detail_devis;
 use Illuminate\Support\Facades\Session;
+use Livewire\WithPagination;
 
 class VenteFabrication extends Component
 {
+    use WithPagination;
+
     public $fabProd;
     public $produit;
     public $fabPrix;

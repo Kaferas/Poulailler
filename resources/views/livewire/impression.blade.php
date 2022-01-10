@@ -47,8 +47,8 @@
         <button class="btn btn-success p-1 d-flex justify-content-end" onclick="printDiv('doc')">🖨 Print</button>
 
         @if (isset($data))
+        @if ($table == "clients")
         <div id="doc">
-            @if ($table == "clients")
             {{-- {{$data}} --}}
                 <table class="table" >
                     <thead>
@@ -98,7 +98,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
+            </div>
             @elseif($table == "depenses")
             <div id="doc">
 
@@ -130,13 +130,13 @@
                     <thead>
                         <tr class="text-center">
                             <th scope="col">#</th>
-                            <th scope="col">Produit</th>
+                            {{-- <th scope="col">Produit</th> --}}
                             <th scope="col">prixUnitaire</th>
                     <th scope="col">Quantite</th>
                     <th scope="col">Total</th>
                     <th scope="col">Rabais</th>
                     <th scope="col">Client</th>
-                    <th scope="col">Date</th>
+                    {{-- <th scope="col">Date</th> --}}
                 </tr>
                 </thead>
                 <tbody>

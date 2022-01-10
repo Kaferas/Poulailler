@@ -13,19 +13,21 @@
             @error('rubrique')
                     <div class="alert alert-danger">{{$message}}</div>
                 @enderror
-        
+
         </h6>
         <div class="row ">
             <div class="form-group col-md-6">
                 <label for="">Produit:</label>
                     @if($rubrique == "premiere")
                     <select name="" id="" class="form-control" wire:model="produit" wire:change="triggerHistory">
+                        <option value=""></option>
                         @foreach($produits as $pro)
                         <option value="{{$pro->id}}">{{$pro->nomProduit}}</option>
                         @endforeach
                     </select>
                     @elseif($rubrique == "fini")
                     <select name="" id="" class="form-control" wire:model="produit" wire:change="triggerHistory">
+                        <option value=""></option>
                         @foreach($produits as $pro)
                         <option value="{{$pro->id}}">{{$pro->nom_devis}}</option>
                         @endforeach
@@ -51,14 +53,19 @@
                     <div class="alert alert-danger">{{$message}}</div>
                 @enderror
             </div>
+            {{$rubrique}}
             <div class="form-group col-md-6">
                @if($rubrique== "premiere" )
                <label for="">Categorie:</label>
                <select name="" id="" class="form-control" wire:model="categorie">
+                   <option value=""></option>
                   @foreach($categories as $cat)
                   <option value="{{$cat->id}}">{{$cat->nameCat}}</option>
                   @endforeach
                </select>
+               @error('categorie')
+               <div class="alert alert-danger">{{$message}}</div>
+           @enderror
                @endif
             </div>
         </div>
@@ -69,7 +76,7 @@
     <div class="col-md-8 row mt-4">
       <div class="col-md-6 border-top-0 border-bottom-0 border-left-0 border border-secondary">
           <table class="table">
-                 <h4 class="d-flex justify-content-start text text-success">Stock Nouveau >></h4>
+                 <h4 class="d-flex justify-content-start text text-success">Dernièrement Stocké>></h4>
                  <thead>
                 <tr>
                 <th scope="col">Nom</th>
@@ -90,7 +97,7 @@
       </div>
       <div  class="col-md-6   border-top-0 border-bottom-0 border border-secondary">
           <table class="table">
-              <h4 class="text text-danger"><< Stock Précedent</h4>
+              <h4 class="text text-danger"><< Précedement Stocké</h4>
             <thead>
                 <tr>
                 <th scope="col">Nom</th>
@@ -113,20 +120,20 @@
 </div>
 <script>
     document.addEventListener("whaoou",event=>{
-        console.log(event);
         let data=event.detail[0];
         let newlydata=event.detail[1];
+        console.log(newlydata);
 
         document.getElementById("nomancien").innerHTML=data.nomProduit || "";
         document.getElementById("prixancien").innerHTML=data.prixUnitaire || "";
         document.getElementById("quantiteancien").innerHTML= data.Quantite;
-        let trueDa=parseInt(new Date(data.created_at).getDate()+1) +" - "+ parseInt(new Date(data.created_at).getMonth()+1) +" - "+new Date(data.created_at).getFullYear()   
+        let trueDa=parseInt(new Date(data.created_at).getDate()+1) +" - "+ parseInt(new Date(data.created_at).getMonth()+1) +" - "+new Date(data.created_at).getFullYear()
         document.getElementById("dateancien").innerHTML=trueDa || "";
-        
+
         document.getElementById("nomnouveau").innerHTML=data.nomProduit || "";
         document.getElementById("prixnouveau").innerHTML=newlydata.prixUnite || "";
         document.getElementById("quantitenouveau").innerHTML=newlydata.quantite || "";
-        let trueDate=parseInt(new Date(data.updated_at).getDate()+1) +" - "+ parseInt(new Date(data.updated_at).getMonth()+1) +" - "+new Date(data.updated_at).getFullYear()   
+        let trueDate=parseInt(new Date(data.updated_at).getDate()+1) +" - "+ parseInt(new Date(data.updated_at).getMonth()+1) +" - "+new Date(data.updated_at).getFullYear()
         document.getElementById("datenouveau").innerHTML=trueDate;
     })
 </script>

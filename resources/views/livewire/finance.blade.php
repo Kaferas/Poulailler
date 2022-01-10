@@ -18,16 +18,16 @@
        @endif
 
         @if ($vente)
-            <div class=" d-inline-flex justify-center mt-3 h-50  col-md-12">
+            <div class=" d-inline-flex justify-content-around mt-3 h-50  col-md-12">
                 <div class="col-md-5 h-50">
-                    <div class="col-md-5 h-25 d-flex justify-content-around align-items-end ">
+                    <div class="col-md-12 h-25 d-flex justify-content-center align-items-end ">
                         <span class="text text-dark">Montant Global</span>
                     </div>
-                    <div class="col-md-7 h-50 d-flex justify-content-around align-items-betweens text-light bg-success">
+                    <div class="col-md-12 h-50 d-flex justify-content-around align-items-between text-light bg-success">
                         <h3>{{$total + $fabrication}} FBU</h3>
                     </div>
                 </div>
-                <div class="col-md-3 h-50">
+                <div class="col-md-5 h-50">
                     <div class="col-md-12 h-25 d-flex justify-content-center align-items-end ">
                         <span class="text text-dark">Depenses </span>
                     </div>
@@ -35,7 +35,7 @@
                         <h3>{{$totalDep}} FBU</h3>
                     </div>
                 </div>
-                <div class="col-md-4 h-50">
+                <div class="col-md-5 h-50">
                     <div class="col-md-12 h-25 d-flex justify-content-center align-items-end ">
                         <span class="text text-dark">Caisse </span>
                     </div>
@@ -47,14 +47,14 @@
             </div>
             <div class="mt-3">
                 <h3 class="text-center">Stock Global</h3>
-                <table class="table table-striped">
+                 <table class="table table-striped">
                     <thead class="text-center">
                       <tr>
                         <th scope="col">Nom Produit</th>
                         <th scope="col">Prix Unitaire</th>
                         <th scope="col">Quantite</th>
                         <th scope="col">Categorie</th>
-            
+
                       </tr>
                     </thead>
                     <tbody class="text-center">
@@ -64,7 +64,7 @@
                         <td>{{$produit->prixUnitaire}}</td>
                         <td>{{$produit->Quantite}}</td>
                         <td>{{$produit->categories->nameCat}}</td>
-                   
+
                       </tr>
                      @endforeach
                     </tbody>
@@ -112,7 +112,7 @@
                     <h2 class="text-center m-2 text text-primary">Total : {{$operations->sum('montant')}}FBU</h2>
                 </tr>
             </tbody>
-            <div class="form-group m-1">
+            <div class="form-group m-1 d-flex justify-content-end">
                 <button class="btn btn-success p-1 m-1" onclick="printDivs('roll')">Print</button>
             </div>
         </table>

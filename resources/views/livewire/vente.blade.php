@@ -37,7 +37,7 @@
                     <div class="form-group">
                         <label for="" class="text text-primary">Retour En Stock</label>
                         <input type="radio" name="etat" id=""  value="stock" wire:model="etat">
-                    </div>            
+                    </div>
                 @endif
                 <div class="form-group">
                     <label for="" class="text text-primary">Reparation</label>
@@ -75,7 +75,7 @@
                 </div>
                @endif
             </div>
-         
+
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="">Client:</label>
@@ -93,31 +93,33 @@
                 <div class="form-group">
                     <button class="btn btn-success p-1 mr-3" wire:click.prevent="addClient">+</button>
                 </div>
+                @if ($etat != 'reparation' || $etat != 'stock')
                 <div class="form-group">
-                   <label for="">Mode Paiement</label>
-                   <input type="radio"  id="" value="Cash"  name="modePaie"  wire:model="paymethod">
-                   <label for="" class="text text-primary">Cash</label>
-                   <input type="radio"  id="" value="Cheque" name="modePaie" wire:model="paymethod">
-                   <label for="" class="text text-primary">Cheque</label>
-                   <input type="radio" id="" value="Credit" name="modePaie" wire:model="paymethod">
-                   <label for="" class="text text-primary">Credit</label>
-                   @if ($paymethod == "Cheque")
-                   <input type="text" name="" id="" class="form-control border-primary" placeholder="Numero du cheque" wire:model="numeroChek" value="0">
-                   @error($numeroChek)
-                   <div class="alert alert-danger">{{$message}}</div>
-                   @enderror
-                   @elseif($paymethod == "Credit")
-                   <div class="row">
-                   <span class="text text-primary">Date de Paiement: </span>
-                   <input type="date" name="" id="" class="form-control border-primary" placeholder="Numero du cheque" wire:model="datePaie" value="0">
-                   </div>
-                  @endif
-                </div>
+                    <label for="">Mode Paiement</label>
+                    <input type="radio"  id="" value="Cash"  name="modePaie"  wire:model="paymethod">
+                    <label for="" class="text text-primary">Cash</label>
+                    <input type="radio"  id="" value="Cheque" name="modePaie" wire:model="paymethod">
+                    <label for="" class="text text-primary">Cheque</label>
+                    <input type="radio" id="" value="Credit" name="modePaie" wire:model="paymethod">
+                    <label for="" class="text text-primary">Credit</label>
+                    @if ($paymethod == "Cheque")
+                    <input type="text" name="" id="" class="form-control border-primary" placeholder="Numero du cheque" wire:model="numeroChek" value="0">
+                    @error($numeroChek)
+                    <div class="alert alert-danger">{{$message}}</div>
+                    @enderror
+                    @elseif($paymethod == "Credit")
+                    <div class="row">
+                    <span class="text text-primary">Date de Paiement: </span>
+                    <input type="date" name="" id="" class="form-control border-primary" placeholder="Numero du cheque" wire:model="datePaie" value="0">
+                    </div>
+                   @endif
+                 </div>
 
-                @error('paymethod')
-                <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>
-                @enderror
-            </div>
+                 @error('paymethod')
+                 <div class="alert alert-danger mt-1 col-md-12">{{ $message }}</div>
+                 @enderror
+             </div>
+                @endif
             <div class="form-group">
                 <button class="btn btn-primary col-md-5">Vendre</button>
                 <button class="btn btn-secondary" wire:click.prevent="afficherPro">Derniers Ventes</button>
@@ -148,7 +150,7 @@
               </tr>
             </thead>
             <tbody>
-                
+
             @foreach ($reports as $report)
             <tr>
              <th scope="row">{{$report->produits->nomProduit}}</th>

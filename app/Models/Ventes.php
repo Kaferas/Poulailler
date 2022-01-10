@@ -10,7 +10,7 @@ class Ventes extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['prodId', 'montantUnit', 'qty', 'totalAmount', 'etat','rabais', 'ClientId', 'paymethod', 'numeroChek', 'userId','datePaie'];
+    protected $fillable = ['prodId', 'montantUnit', 'qty', 'totalAmount', 'etat', 'rabais', 'ClientId', 'paymethod', 'numeroChek', 'userId', 'datePaie'];
 
     public function produits()
     {

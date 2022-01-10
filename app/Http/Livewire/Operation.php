@@ -17,7 +17,7 @@ class Operation extends Component
     public $depenses;
     public $depense;
     public $motif;
-    public $dernier;
+    public $dernier = 1;
     public $modif = 0;
     public  $montant;
     public $allinOne = 0;
@@ -37,11 +37,11 @@ class Operation extends Component
     }
     public function mount()
     {
-        $this->depenses = Depenses::where("etat",'recette')->get();
+        $this->depenses = Depenses::where("etat", 'recette')->get();
     }
     public function changement()
     {
-        $this->depenses = Depenses::where('etat',$this->specif)->get();
+        $this->depenses = Depenses::where('etat', $this->specif)->get();
     }
     public function dernierOperation()
     {
@@ -66,13 +66,13 @@ class Operation extends Component
     public function save()
     {
         $this->validate([
-            'nomDemandeur'=>"string",
+            'nomDemandeur' => "string",
             'motif' => "string",
             'depense' => "required|integer",
             'montant' => "required|integer"
         ]);
         $data = [
-            'nomDemandeur'=>$this->nomDemandeur,
+            'nomDemandeur' => $this->nomDemandeur,
             'motif' => $this->motif,
             'montant' => $this->montant,
             'depenseId' => $this->depense,
@@ -91,7 +91,7 @@ class Operation extends Component
     {
         return view('livewire.operation', [
             'derniers' => Operations::paginate(5),
-            'allDepenses' => Depenses::orderBy('id',"asc")->paginate(5)
+            'allDepenses' => Depenses::orderBy('id', "asc")->paginate(5)
         ]);
     }
 }

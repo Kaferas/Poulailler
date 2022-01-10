@@ -27,6 +27,7 @@ class Impression extends Component
     public function render()
     {
         return view('livewire.impression', [
+
             'data' => DB::table($this->table)->where(function ($query) {
                 if ($this->table == "depenses") {
                     if ($this->du && $this->au) {

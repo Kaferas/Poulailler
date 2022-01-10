@@ -20,12 +20,13 @@ class Approvisionner extends Component
     public $code;
     public $history;
     private $lastly;
-    public $rubrique="fini";
+    public $rubrique = "fini";
 
     public function mount()
     {
-        $this->produits=Produit::all();   
-        $this->categories=Categories::all();
+        $this->rubrique = "fini";
+        $this->produits = $this->rubrique == "fini" ? Produit::all() : Devis::all();
+        $this->categories = Categories::all();
     }
 
     public function getLast()
@@ -40,72 +41,74 @@ class Approvisionner extends Component
 
     public function triggerHistory()
     {
-        if($this->rubrique == "premiere")
-        {
-            $pro=Produit::where("id",$this->produit)->first()->codeProduit;
-            $this->price=Produit::where("id",$this->produit)->first()->prixUnitaire;
-            $this->history=HistoryStock::where("codeProduit",$pro)->first();   
-            $this->lastly=isset($this->history->restJson) == null ?  "{}" : json_decode($this->history->restJson)  ;
-            $this->dispatchBrowserEvent("whaoou",[$this->getLast(),$this->getnewly()]);
+        if ($this->rubrique == "premiere") {
+            dd("Biiiiig");
+            $pro = Produit::where("id", $this->produit)->first()->codeProduit;
+            $this->price = Produit::where("id", $this->produit)->first()->prixUnitaire;
+            $this->history = HistoryStock::where("codeProduit", $pro)->orderBy("id", "DESC")->first();
+            $this->lastly = isset($this->history->restJson) == null ?  "{}" : json_decode($this->history->restJson);
+            $this->dispatchBrowserEvent("whaoou", [$this->getLast(), $this->getnewly()]);
         }
-        if($this->rubrique == "fini"){
-    
-            $this->price=detail_devis::where('devisId',$this->produit)->sum("montantMateriel");
+        if ($this->rubrique == "fini") {
+            $this->price = detail_devis::where('devisId', $this->produit)->sum("montantMateriel");
+            // sio
+            // dd($this->price);
         }
     }
     public function trigger()
     {
-        if($this->rubrique == "premiere")
-        {
-            $this->produits=Produit::all();   
-            
-        }elseif($this->rubrique == "fini"){
-            
-            $this->produits=Devis::all();   
+        if ($this->rubrique == "premiere") {
+            $this->produits = Produit::all();
+        } elseif ($this->rubrique == "fini") {
+
+            $this->produits = Devis::all();
         }
-    
     }
 
-    public function save(){
+    public function save()
+    {
         $this->validate([
-            'rubrique'=>"required",
-            'produit'=>"required",
-            "qty"=>"required|integer",
-            "price"=>"required|integer"
+            'rubrique' => "required",
+            'produit' => "required",
+            "qty" => "required|integer",
+            "price" => "required|integer",
+            'categorie' => "required"
         ]);
         // dd($this->produit);
-        if($this->rubrique == "premiere"){
-            $restant=Produit::find($this->produit);
+        if ($this->rubrique == "premiere") {
+            // dd("Puuuuf");
+            $restant = Produit::find($this->produit);
             HistoryStock::create([
-                'codeProduit'=>$restant->codeProduit,
-                'quantite'=>$this->qty,
-                'prixUnite'=>$this->price,
-                'catId'=>$this->categorie,
-                'restJson'=>json_encode($restant)
+                'codeProduit' => $restant->codeProduit,
+                'quantite' => $this->qty,
+                'prixUnite' => $this->price,
+                'catId' => $this->categorie,
+                'restJson' => json_encode($restant)
             ]);
+            // dd($restant);
             $restant->update([
-                'Quantite'=>$this->qty + $restant->Quantite,
-                'prixUnitaire'=>$this->price,
-                'catId'=>$this->categorie
+                'Quantite' => $this->qty + $restant->Quantite,
+                'prixUnitaire' => $this->price,
+                'catId' => $this->categorie
             ]);
             return redirect(request()->header('Referer'));
         }
-        if($this->rubrique == "fini"){
-            $restant=Devis::find($this->produit);
+        if ($this->rubrique == "fini") {
+            dd("Yeaaaa");
+            $restant = Devis::find($this->produit);
             HistoryStock::create([
-                'codeProduit'=>$restant->codeProduit,
-                'quantite'=>$this->qty,
-                'prixUnite'=>$this->price,
-                'restJson'=>json_encode($restant)
+                'codeProduit' => $restant->codeProduit,
+                'quantite' => $this->qty,
+                'prixUnite' => $this->price,
+                'restJson' => json_encode($restant)
             ]);
             $restant->update([
-                    'quantite'=>$this->qty + $restant->quantite,
-                    'prixUnite'=>$this->price,
-                    'catId'=>$this->categorie
-                ]);
-                return redirect(request()->header('Referer'));
+                'quantite' => $this->qty + $restant->quantite,
+                'prixUnite' => $this->price,
+                'catId' => $this->categorie
+            ]);
+            return redirect(request()->header('Referer'));
         }
-
     }
 
     public function render()

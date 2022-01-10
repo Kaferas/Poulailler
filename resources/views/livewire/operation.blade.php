@@ -39,7 +39,7 @@
             <div class="col-md-9">
                 <label for="">Type Depense:</label>
                 <input type="hidden" wire:model="etat">
-              
+
                 @if ($specif == 'recette')
                 <select name="" id="" class="form-control" wire:model="depense">
                     <option value="">Choisissez Depense</option>
@@ -47,7 +47,7 @@
                     <option value="{{$dep->id}}">{{ $dep->nomDepense }}</option>
                     @endforeach
                 </select>
-             
+
                 @else
                 <select name="" id="" class="form-control" wire:model="depense">
                     <option value="">Choisissez Depense</option>
@@ -108,7 +108,7 @@
             <div class="col-md-9">
                 <label for="">Type Depense:</label>
                 <input type="hidden" wire:model="etat">
-          
+
                 @if ($specif == 'recette')
                 <select name="" id="" class="form-control" wire:model="depense">
                     <option value="">Choisissez Depense</option>
@@ -116,7 +116,7 @@
                     <option value="{{$dep->id}}">{{ $dep->nomDepense }}</option>
                     @endforeach
                 </select>
-            
+
                 @else
                 <select name="" id="" class="form-control" wire:model="depense">
                     <option value="">Choisissez Depense</option>
@@ -142,25 +142,29 @@
     </div>
     {{-- {{$motif}} --}}
     @if($dernier)
-       <div class="col-md-6 mt-4 align-center">
+       <div class="col-md-7 mt-4 align-center">
         <h2 class="text text-primary">Dernier Operation</h2>
         <table class="table">
             <thead>
               <tr>
-                <th scope="col" class="text text-primary">#</th>
+                {{-- <th scope="col" class="text text-primary">#</th> --}}
+                <th scope="col">Demandeur</th>
                 <th scope="col">Motif</th>
                 <th scope="col">Montant</th>
                 <th scope="col">Type Depense</th>
+                <th scope="col">Date</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
               @foreach ($derniers as $dernier)
                 <tr>
-                    <th scope="row" class="text text-primary">{{$loop->index+1}}</th>
+                    {{-- <th scope="row" class="text text-primary">{{$loop->index+1}}</th> --}}
+                    <th scope="row" class="text text-primary">{{$dernier->nomDemandeur}}</th>
                     <td>{{$dernier->motif}}</td>
                     <td>{{$dernier->montant}}</td>
                     <td>{{$dernier->depenses->nomDepense}}</td>
+                    <td>{{date("d-m-Y",strtotime($dernier->created_at))}}</td>
                     <td><a href="" wire:click.prevent="changeModif({{$dernier->id}})" class="btn btn-primary">Modifier</a></td>
                 </tr>
               @endforeach
@@ -183,7 +187,7 @@
             </tr>
             </thead>
             <tbody  id="data">
-              @foreach ($allDepenses as $cat)  
+              @foreach ($allDepenses as $cat)
               <tr >
                     <th scope="row" class="text text-primary">{{$loop->index+1}}</th>
                     <td>{{$cat->nomDepense}}</td>
